@@ -1,7 +1,6 @@
 package com.company;
 
-//Collaborator James
-//Collaborators: Zach Snyder
+//Collaborators: Zach Snyder, James Benton, Eileen Lowers
 public class Main {
 
     public static void main(String[] args) {
