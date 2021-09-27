@@ -17,7 +17,6 @@ public class Account {
         balance = 0;
     }
 
-
     public String getName() {
         return name;
     }
