@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="208da467-6cca-4f3d-8c9b-ca9ee691a37f" name="Changes" comment="adding name to collaborators">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/company/Display.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Menu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
