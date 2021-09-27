@@ -17,27 +17,43 @@ public class Account {
         balance = 0;
     }
 
-    public String getName() {
-        return name;
+    public String toString(){
+        return name + ", " + accountNumber + ", " + balance + "\n";
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String accountDetails(){
+        return name + "'s account\naccountNumber: " + accountNumber
+                + "\n + balance: " + balance;
+    }
+
+    public void deposit(double amount){
+        balance += amount;
+    }
+
+    public boolean withdraw(double amount){
+        if(balance >= amount){
+            balance -= amount;
+            return true;
+        }else return false;
+    }
+
+    public boolean makeTransfer(int recieverNumber, double amount){
+//        if(withdraw(amount)){
+//            Transaction t = new Transaction("transfer", accountNumber, recieverNumber, amount);
+//        }
+//        return true;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(int accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
     public float getBalance() {
         return balance;
     }
 
-    public void setBalance(float balance) {
-        this.balance = balance;
-    }
 }
