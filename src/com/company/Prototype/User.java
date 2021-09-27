@@ -1,4 +1,4 @@
-public class UserAccounts {
+public class User {
     
     private String firstName;
     
@@ -8,9 +8,9 @@ public class UserAccounts {
     
     private double balance;
     
-    public UserAccounts(){}
+    public User(){}
     
-    public UserAccounts(String firstName, String lastName, String acctNo, double balance){
+    public User(String firstName, String lastName, String acctNo, double balance){
         this.firstName = firstName;
         this.lastName = lastName;
         this.acctNo = acctNo;
