@@ -1,6 +1,6 @@
 package com.company;
 
-//Collaborators: Eileen
+//Collaborators: Zach Snyder, Eileen Lowers
 
 public class Main {
 
