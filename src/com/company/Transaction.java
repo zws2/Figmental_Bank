@@ -9,10 +9,10 @@ public class Transaction {
     private final double amount;
     private final String timestamp;
 
-    public Transaction(String transactionType, int senderNum, int recieverNum, double amount) {
+    public Transaction(String transactionType, int senderNum, int receiverNum, double amount) {
         this.transactionType = transactionType;
         this.senderNum = senderNum;
-        this.receiverNum = recieverNum;
+        this.receiverNum = receiverNum;
         this.amount = amount;
         timestamp = generateTimeStamp();
 
