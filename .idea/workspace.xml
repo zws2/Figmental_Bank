@@ -45,35 +45,6 @@
     </recent_temporary>
   </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="208da467-6cca-4f3d-8c9b-ca9ee691a37f" name="Changes" comment="" />
-      <created>1632754314254</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1632754314254</updated>
-    </task>
-    <task id="LOCAL-00001" summary="adding name to collaborators">
-      <created>1632764437235</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1632764437235</updated>
-    </task>
-    <task id="LOCAL-00002" summary="cheap menu setup, will enhance">
-      <created>1632776246037</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1632776246037</updated>
-    </task>
-    <task id="LOCAL-00003" summary="cheap menu setup, will enhance">
-      <created>1632776508844</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1632776508844</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -87,10 +58,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="adding name to collaborators" />
-    <MESSAGE value="cheap menu setup, will enhance" />
-    <option name="LAST_COMMIT_MESSAGE" value="cheap menu setup, will enhance" />
   </component>
 </project>
