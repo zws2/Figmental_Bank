@@ -3,26 +3,39 @@ package com.company;
 import java.text.SimpleDateFormat;
 
 public class Transaction {
-    private String transactionType;
-    private int senderNum;
-    private int recieverNum;
-    private double amount;
-    private String timestamp;
+    private final String transactionType;
+    private final int senderNum;
+    private final int receiverNum;
+    private final double amount;
+    private final String timestamp;
 
     public Transaction(String transactionType, int senderNum, int recieverNum, double amount) {
         this.transactionType = transactionType;
         this.senderNum = senderNum;
-        this.recieverNum = recieverNum;
+        this.receiverNum = recieverNum;
         this.amount = amount;
-        generateTimeStamp();
+        timestamp = generateTimeStamp();
+
+        //recordTransaction(this);
     }
 
     public Transaction(String transactionType, int accNum, double amount) {
         this.transactionType = transactionType;
         this.senderNum = accNum;
-        this.recieverNum = accNum;
+        this.receiverNum = accNum;
         this.amount = amount;
-        generateTimeStamp();
+        timestamp = generateTimeStamp();
+
+        //recordTransaction(this);
+    }
+
+    private String generateTimeStamp(){
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return f.format(System.currentTimeMillis());
+    }
+
+    public String toString(){
+        return transactionType + ", " + senderNum + ", " + receiverNum + ", " + amount + ", " + timestamp;
     }
 
     public String getTransactionType() {
@@ -33,8 +46,8 @@ public class Transaction {
         return senderNum;
     }
 
-    public int getRecieverNum() {
-        return recieverNum;
+    public int getReceiverNum() {
+        return receiverNum;
     }
 
     public double getAmount() {
@@ -45,9 +58,5 @@ public class Transaction {
         return timestamp;
     }
 
-    private void generateTimeStamp(){
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        timestamp = f.format(System.currentTimeMillis());
-    }
 
 }
