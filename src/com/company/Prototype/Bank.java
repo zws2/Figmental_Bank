@@ -1,11 +1,22 @@
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.io.ObjectOutputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 
 public class Bank {
     
     private String acctNo;
     
-    private static ArrayList<User> userAccounts;
+    private ArrayList<User> userAccounts = new ArrayList<>();
+    
+    private ArrayList<Account> accounts = new ArrayList<>();
+    
+    private boolean hasSerializedOnce;
     
     public Bank(){}
     
@@ -13,12 +24,21 @@ public class Bank {
         this.acctNo = acctNo;
     }
     
+    public String getAcctNo(){
+        return acctNo;
+    }
+    
     public void setUserAccounts(ArrayList<User> userAccounts){
         this.userAccounts = userAccounts;
     }
     
-    public String getAcctNo(){
-        return acctNo;
+    //insert a new user account into arraylist or sent for individual serialization
+    public void addUserAccount(User user){
+        if(hasSerializedOnce){
+            writeUserToFile(user);
+        }else{
+            userAccounts.add(user);
+        }
     }
     
     //retrieve all user accounts 
@@ -57,4 +77,57 @@ public class Bank {
             }
         }
     }
+    
+    //Serializing user to file
+    public void writeUserToFile(User user){
+        try(ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("users.txt")))){
+            oos.writeObject(user);
+            oos.flush();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+    
+    //Deserializing users from file
+    public void readUserFromFile(){
+        try(ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream("users.txt")))){
+            while(true){
+                ois.readObject();
+            }
+        }catch(IOException | ClassNotFoundException e){
+            System.out.println("There is no more data to read from the file.");
+        }finally{
+        }
+    }
+    
+     //Serializing Accounts to file
+    public void writeAccountToFile(Account account){
+        try(ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("account.txt")))){
+            oos.writeObject(account);
+            oos.flush();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+    
+    //Deserializing Account from file
+    public void readAccountToFile(){
+        try(ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream("account.txt")))){
+            while(true){
+                ois.readObject();
+            }
+        }catch(IOException | ClassNotFoundException e){
+            System.out.println("There is no more data to read from the file.");
+        }finally{
+        }
+    }
+    
+    //save users in the ArrayList
+    public void save() throws IOException, ClassNotFoundException {
+        for(User u : userAccounts){
+            writeUserToFile(u);
+        }
+        userAccounts.clear();
+    }
+
 }
