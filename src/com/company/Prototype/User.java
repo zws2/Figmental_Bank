@@ -1,4 +1,6 @@
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     
     private String firstName;
     
@@ -8,13 +10,16 @@ public class User {
     
     private double balance;
     
+    private String password;
+    
     public User(){}
     
-    public User(String firstName, String lastName, String acctNo, double balance){
+    public User(String firstName, String lastName, String acctNo, double balance, String password){
         this.firstName = firstName;
         this.lastName = lastName;
         this.acctNo = acctNo;
         this.balance = balance;
+        this.password = password;
     }
     
     public void setFirstName(String firstName){
@@ -29,6 +34,9 @@ public class User {
     public void setBalance(double balance){
         this.balance = balance;
     }
+    public void setPassword(String password){
+        this.password = password;
+    }
     
     public String getFirstName(){
         return firstName;
@@ -41,6 +49,9 @@ public class User {
     }
     public double getBalance(){
         return balance;
+    }
+    public String getPassword(){
+        return password;
     }
     
     public String toString(){
