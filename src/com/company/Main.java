@@ -6,12 +6,24 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+
         Scanner scan = new Scanner(System.in);
 
         LoginCred credentials = new LoginCred();
         UserAccess userAccess = new UserAccess(credentials.getLoginInfo());
 
+
+        init();
+
+        //testAccount();
+        //testTransaction();
+
+    }
+
+    private static void init(){
+
         int option = 0;
+
 
         printHeader();
         printMainMenu();
@@ -74,6 +86,32 @@ public class Main {
                 System.out.println("Whoops! Something done broke!");
                 performAction(option, scan);
         }
+      
+        Display.printHeader();
+        Display.printMainMenu();
+        display.getInput();
+    }
+
+    private static void testAccount(){
+        Account a = new Account("Zach", 123);
+        a.deposit(100d);
+        System.out.println(a.accountDetails());
+        a.withdraw(50d);
+        System.out.println(a.accountDetails());
+    }
+
+    private static void testTransaction(){
+        Transaction t = new Transaction("transfer", 100, 101, 100d);
+        System.out.println(t);
+
+        Account a = new Account("Zach", 123);
+        a.deposit(100d);
+
+        Account b = new Account("Carl", 124);
+
+        t = a.transfer(b.accountNumber, 50d);
+        System.out.println(t);
+
     }
 
 }
