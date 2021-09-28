@@ -32,24 +32,41 @@ public class Account {
                 + "\nbalance: " + balance;
     }
 
+    //use this to update an account object undergoing a transaction.
     public void deposit(double amount){
         balance += amount;
-        new Transaction("deposit", accountNumber, amount);
     }
 
+    //use this to update an account object undergoing a transaction.
     public boolean withdraw(double amount){
         if(balance >= amount){
             balance -= amount;
-            new Transaction("withdraw", accountNumber, amount);
             return true;
         }else return false;
     }
 
-    public boolean transfer(int receiverNumber, double amount){
+    //A person deposits money into their own account.
+    public Transaction depositTransaction(double amount){
+        balance += amount;
+        //Bank.writeAccountToFile(this);
+        return new Transaction("deposit", accountNumber, amount);
+    }
+
+    //A person withdraws from their own account.
+    public Transaction withdrawTransaction(double amount){
+        if(balance >= amount){
+            balance -= amount;
+            //Bank.writeAccountToFile(this);
+            return new Transaction("withdraw", accountNumber, amount);
+        }else return new Transaction("declined", accountNumber, amount);
+    }
+
+    //an account transfers money to another account
+    //use this when you want to send a transaction to Bank
+    public Transaction transfer(int receiverNumber, double amount){
         if(withdraw(amount)){
-            new Transaction("transfer", accountNumber, receiverNumber, amount);
-            return true;
-        }else return false;
+            return new Transaction("transfer", accountNumber, receiverNumber, amount);
+        }else return new Transaction("declined", accountNumber, receiverNumber, amount);
     }
 
     public String getName() {
