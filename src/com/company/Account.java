@@ -37,12 +37,12 @@ public class Account {
         }else return false;
     }
 
-    public boolean makeTransfer(int recieverNumber, double amount){
+//    public boolean makeTransfer(int recieverNumber, double amount){
 //        if(withdraw(amount)){
 //            Transaction t = new Transaction("transfer", accountNumber, recieverNumber, amount);
 //        }
 //        return true;
-    }
+//    }
 
     public String getName() {
         return name;
