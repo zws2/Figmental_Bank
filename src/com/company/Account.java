@@ -3,12 +3,18 @@ package com.company;
 public class Account {
     String name;
     int accountNumber;
-    float balance;
+    double balance;
 
-    public Account(String name, int accountNumber, float balance) {
+    public Account(String name, int accountNumber, double balance) {
         this.name = name;
         this.accountNumber = accountNumber;
         this.balance = balance;
+    }
+
+    public Account(String name, int accountNumber) {
+        this.name = name;
+        this.accountNumber = accountNumber;
+        balance = 0;
     }
 
     public Account() {
@@ -23,25 +29,27 @@ public class Account {
 
     public String accountDetails(){
         return name + "'s account\naccountNumber: " + accountNumber
-                + "\n + balance: " + balance;
+                + "\nbalance: " + balance;
     }
 
     public void deposit(double amount){
         balance += amount;
+        new Transaction("deposit", accountNumber, amount);
     }
 
     public boolean withdraw(double amount){
         if(balance >= amount){
             balance -= amount;
+            new Transaction("withdraw", accountNumber, amount);
             return true;
         }else return false;
     }
 
-    public boolean makeTransfer(int recieverNumber, double amount){
-//        if(withdraw(amount)){
-//            Transaction t = new Transaction("transfer", accountNumber, recieverNumber, amount);
-//        }
-//        return true;
+    public boolean transfer(int receiverNumber, double amount){
+        if(withdraw(amount)){
+            new Transaction("transfer", accountNumber, receiverNumber, amount);
+            return true;
+        }else return false;
     }
 
     public String getName() {
@@ -52,7 +60,7 @@ public class Account {
         return accountNumber;
     }
 
-    public float getBalance() {
+    public double getBalance() {
         return balance;
     }
 
