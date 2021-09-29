@@ -13,6 +13,8 @@ public class UserAccess {
     }
 
     public static void registerUser(Scanner scan) {
+
+
     }
 
     public static void loginUser(Scanner scan) throws NullPointerException {

@@ -13,14 +13,14 @@ public class Main {
         UserAccess userAccess = new UserAccess(credentials.getLoginInfo());
 
 
-        init();
+        init(scan);
 
         //testAccount();
         //testTransaction();
 
     }
 
-    private static void init(){
+    private static void init(Scanner scan){
 
         int option = 0;
 
@@ -86,10 +86,7 @@ public class Main {
                 System.out.println("Whoops! Something done broke!");
                 performAction(option, scan);
         }
-      
-        Display.printHeader();
-        Display.printMainMenu();
-        display.getInput();
+
     }
 
     private static void testAccount(){

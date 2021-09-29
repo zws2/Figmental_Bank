@@ -46,9 +46,9 @@ public class Account {
     }
 
 
-//    public boolean makeTransfer(int recieverNumber, double amount){
+//    public boolean makeTransfer(int receiverNumber, double amount){
 //        if(withdraw(amount)){
-//            Transaction t = new Transaction("transfer", accountNumber, recieverNumber, amount);
+//            Transaction t = new Transaction("transfer", accountNumber, receiverNumber, amount);
 //        }
 //        return true;
 //    }
