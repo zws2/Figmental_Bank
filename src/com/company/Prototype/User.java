@@ -1,3 +1,5 @@
+package com.company.Prototype;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
