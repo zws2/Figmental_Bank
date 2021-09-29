@@ -35,7 +35,7 @@ public class Main {
         b.writeUsers();
         b.getUsers().clear();
         try{
-            b.readUsersFromFile();
+            b.readUsers();
         }catch(IOException | ClassNotFoundException e){
             e.printStackTrace();
         }
@@ -63,7 +63,7 @@ public class Main {
         b.getAccounts().clear();
 
         try{
-            b.readAccountsFromFile();
+            b.readAccounts();
         }catch(IOException | ClassNotFoundException e){
             e.printStackTrace();
         }
