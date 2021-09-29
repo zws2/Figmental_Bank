@@ -1,134 +1,85 @@
 package com.company;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.io.ObjectOutputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
+import java.util.Scanner;
 
 public class Bank {
 
-    private String acctNo;
+    private String bankNum;
 
-    private ArrayList<User> userAccounts = new ArrayList<>();
-    private ArrayList<Account> accounts = new ArrayList<>();
-
-    private boolean hasSerializedOnce;
+    private HashMap<Integer, User> users = new  HashMap<Integer, User>();
+    private  HashMap<Integer, Account> accounts = new  HashMap<Integer, Account>();
 
     public Bank(){}
 
-    public void setAcctNo(String acctNo){
-        this.acctNo = acctNo;
-    }
-
-    public String getAcctNo(){
-        return acctNo;
-    }
-
-    public void setUserAccounts(ArrayList<User> userAccounts){
-        this.userAccounts = userAccounts;
-    }
-
-    //insert a new user account into arraylist or sent for individual serialization
-    public void addUserAccount(User user){
-        if(hasSerializedOnce){
-            writeUserToFile(user);
-        }else{
-            userAccounts.add(user);
-        }
-    }
-
-    //retrieve all user accounts 
-    public ArrayList<User> getUserAccounts(){
-        return userAccounts;
-    }
-
-    //retreive user account by account number
-    public User getUserByAccountNo(String acctNo){
-        for(User u : userAccounts){
-            if(u.getAcctNo().equals(acctNo)){
-                return u;
-            }
-        }
-        return null;
-    }
-
-    //update user info 
-    public void updateUserInfo(User userAccounts){
-        Iterator<User> iterate = this.userAccounts.iterator();
-        while(iterate.hasNext()){
-            User u = (User)iterate.next();
-            if(u.getAcctNo().equals(userAccounts.getAcctNo())){
-                this.userAccounts.set(this.userAccounts.indexOf(u), userAccounts);
-            }
-        }
-    }
-
-    //delete user account
-    public void deleteUserInfo(User userAccounts){
-        Iterator<User> iterate = this.userAccounts.iterator();
-        while(iterate.hasNext()){
-            User u = (User)iterate.next();
-            if(u.getAcctNo().equals(userAccounts.getAcctNo())){
-                iterate.remove();
-            }
-        }
-    }
-
     //Serializing user to file
     public void writeUserToFile(User user){
-        try(ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("users.txt")))){
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\users.txt"))){
             oos.writeObject(user);
-            oos.flush();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    //Serializing Accounts to file
+    public void writeAccountToFile(Account account){
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\accounts.txt"))){
+            oos.writeObject(account);
         }catch(IOException e){
             e.printStackTrace();
         }
     }
 
     //Deserializing users from file
-    public void readUserFromFile(){
-        try(ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream("users.txt")))){
-            while(true){
-                ois.readObject();
+    public void readUsersFromFile() throws IOException, ClassNotFoundException{
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\users.txt"));
+        while(true){
+            try{
+                User u = (User)ois.readObject();
+                users.put(u.getAcctNo(), u);
+            }catch (EOFException e){
+                break;
             }
-        }catch(IOException | ClassNotFoundException e){
-            System.out.println("There is no more data to read from the file.");
-        }finally{
-        }
-    }
-
-    //Serializing Accounts to file
-    public void writeAccountToFile(Account account){
-        try(ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("account.txt")))){
-            oos.writeObject(account);
-            oos.flush();
-        }catch(IOException e){
-            e.printStackTrace();
         }
     }
 
     //Deserializing Account from file
-    public void readAccountToFile(){
-        try(ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream("account.txt")))){
-            while(true){
-                ois.readObject();
+    public void readAccountsFromFile() throws IOException, ClassNotFoundException{
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\accounts.txt"));
+        while(true){
+            try{
+                Account a = (Account)ois.readObject();
+                accounts.put(a.getAccountNumber(), a);
+            }catch (EOFException e){
+                break;
             }
-        }catch(IOException | ClassNotFoundException e){
-            System.out.println("There is no more data to read from the file.");
-        }finally{
         }
     }
 
-    //save users in the ArrayList
-    public void save() throws IOException, ClassNotFoundException {
-        for(User u : userAccounts){
-            writeUserToFile(u);
-        }
-        userAccounts.clear();
+    public void setBankNum(String bankNum){
+        this.bankNum = bankNum;
     }
 
+    public String getBankNum(){
+        return bankNum;
+    }
+
+    public HashMap<Integer, User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(HashMap<Integer, User> users) {
+        this.users = users;
+    }
+
+    public HashMap<Integer, Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(HashMap<Integer, Account> accounts) {
+        this.accounts = accounts;
+    }
 }

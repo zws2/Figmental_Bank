@@ -1,14 +1,18 @@
 package com.company;
 
+import java.io.IOException;
+
 //Collaborators: Zach Snyder, James Benton, Eileen Lowers
 public class Main {
     public static void main(String[] args) {
 
 
-        init();
+        //init();
 
         //testAccount();
         //testTransaction();
+
+        testBank();
 
 
     }
@@ -21,6 +25,26 @@ public class Main {
         Display.printHeader();
         Display.printMainMenu();
         display.getInput();
+    }
+
+    private static void testBank(){
+
+        User u = new User();
+        Bank b = new Bank();
+
+
+        b.writeUserToFile(u);
+        try{
+            b.readUsersFromFile();
+        }catch(IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+
+        User u1 = b.getUsers().get(u.getAcctNo());
+
+        if(u.info().equals(u1.info())) System.out.println("Successfully wrote and retrieved user from file");
+        else System.out.println("Something went wrong...");
+
     }
 
     private static void testAccount(){

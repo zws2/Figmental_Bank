@@ -8,15 +8,21 @@ public class User implements Serializable {
 
     private String lastName;
 
-    private String acctNo;
+    private int acctNo;
 
     private double balance;
 
     private String password;
 
-    public User(){}
+    public User(){
+        firstName = "firstName";
+        lastName = "lastName";
+        acctNo = 0;
+        balance = 0;
+        password = "password";
+    }
 
-    public User(String firstName, String lastName, String acctNo, double balance, String password){
+    public User(String firstName, String lastName, int acctNo, double balance, String password){
         this.firstName = firstName;
         this.lastName = lastName;
         this.acctNo = acctNo;
@@ -30,7 +36,7 @@ public class User implements Serializable {
     public void setLastName(String lastName){
         this.lastName = lastName;
     }
-    public void setAcctNo(String acctNo){
+    public void setAcctNo(int acctNo){
         this.acctNo = acctNo;
     }
     public void setBalance(double balance){
@@ -46,7 +52,7 @@ public class User implements Serializable {
     public String getLastName(){
         return lastName;
     }
-    public String getAcctNo(){
+    public int getAcctNo(){
         return acctNo;
     }
     public double getBalance(){
@@ -56,11 +62,18 @@ public class User implements Serializable {
         return password;
     }
 
-    public String toString(){
+    public String info(){
         return "User Account : [First Name=" + firstName +
                 ", Last Name=" + lastName +
                 ", Account No.=" + acctNo +
                 ", Balance :=" + balance +
                 "]";
+    }
+
+    public String toString(){
+        return firstName +
+                ", " + lastName +
+                ", " + acctNo +
+                ", " + balance;
     }
 }
