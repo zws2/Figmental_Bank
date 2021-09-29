@@ -1,32 +1,36 @@
 package com.company;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
-public class Transaction {
+public class Transaction implements Serializable {
+    private final int bankNum;
     private final String transactionType;
     private final int senderNum;
     private final int receiverNum;
     private final double amount;
     private final String timestamp;
 
-    public Transaction(String transactionType, int senderNum, int receiverNum, double amount) {
+    public Transaction(int bankNum, String transactionType, int senderNum, int receiverNum, double amount) {
+        this.bankNum = bankNum;
         this.transactionType = transactionType;
         this.senderNum = senderNum;
         this.receiverNum = receiverNum;
         this.amount = amount;
         timestamp = generateTimeStamp();
 
-        //recordTransaction(this);
+        Bank.get(bankNum).processTransaction(this);
     }
 
-    public Transaction(String transactionType, int accNum, double amount) {
+    public Transaction(int bankNum, String transactionType, int accNum, double amount) {
+        this.bankNum = bankNum;
         this.transactionType = transactionType;
         this.senderNum = accNum;
         this.receiverNum = accNum;
         this.amount = amount;
         timestamp = generateTimeStamp();
 
-        //recordTransaction(this);
+        Bank.get(bankNum).processTransaction(this);
     }
 
     private String generateTimeStamp(){
@@ -35,7 +39,11 @@ public class Transaction {
     }
 
     public String toString(){
-        return transactionType + ", " + senderNum + ", " + receiverNum + ", " + amount + ", " + timestamp;
+        return bankNum + ", " + transactionType + ", " + senderNum + ", " + receiverNum + ", " + amount + ", " + timestamp;
+    }
+
+    public int getBank() {
+        return bankNum;
     }
 
     public String getTransactionType() {

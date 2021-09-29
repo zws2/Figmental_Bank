@@ -1,26 +1,31 @@
 package com.company;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Scanner;
 
-public class Bank {
+public class Bank implements Serializable{
 
-    private int bankNum;
+    private final int bankNum;
+    private static int currentBankNum = 100;
 
     private HashMap<Integer, User> users = new  HashMap<Integer, User>();
-    private  HashMap<Integer, Account> accounts = new  HashMap<Integer, Account>();
+    private HashMap<Integer, Account> accounts = new  HashMap<Integer, Account>();
+
+    private static HashMap<Integer, Bank> banks = new  HashMap<Integer, Bank>();
 
     public Bank(){
-        bankNum = 1;
-        try {
-            readAccountsFromFile();
-            readUsersFromFile();
-        }catch(IOException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
+        bankNum = getNewBankNum();
+//        try {
+//            try {
+//                readAccountsFromFile();
+//            }catch (EOFException ignored){}
+//            try {
+//                readUsersFromFile();
+//            }catch (EOFException ignored){}
+//        }catch(IOException | ClassNotFoundException e){
+//            e.printStackTrace();
+//        }
+        banks.put(bankNum, this);
     }
 
     public void processTransaction(Transaction t){
@@ -40,11 +45,16 @@ public class Bank {
         Account sender = accounts.get(t.getSenderNum());
         Account receiver = accounts.get(t.getReceiverNum());
 
+        if(sender == null || receiver == null) {
+            System.out.println("Transfer failed.");
+            return;
+        }
+
         sender.withdraw(t.getAmount());
         receiver.deposit(t.getAmount());
 
-        accounts.put(sender.getAccountNumber(), sender);
-        accounts.put(receiver.getAccountNumber(), receiver);
+        accounts.put(sender.getAccountNum(), sender);
+        accounts.put(receiver.getAccountNum(), receiver);
 
         writeAccountToFile(sender);
         writeAccountToFile(receiver);
@@ -53,9 +63,14 @@ public class Bank {
     public void makeWithdrawal(Transaction t){
         Account sender = accounts.get(t.getSenderNum());
 
+        if(sender == null) {
+            System.out.println("Withdrawal failed.");
+            return;
+        }
+
         sender.withdraw(t.getAmount());
 
-        accounts.put(sender.getAccountNumber(), sender);
+        accounts.put(sender.getAccountNum(), sender);
 
         writeAccountToFile(sender);
     }
@@ -63,9 +78,14 @@ public class Bank {
     public void makeDeposit(Transaction t){
         Account receiver = accounts.get(t.getReceiverNum());
 
+        if(receiver == null) {
+            System.out.println("Deposit failed.");
+            return;
+        }
+
         receiver.deposit(t.getAmount());
 
-        accounts.put(receiver.getAccountNumber(), receiver);
+        accounts.put(receiver.getAccountNum(), receiver);
 
         writeAccountToFile(receiver);
     }
@@ -91,7 +111,7 @@ public class Bank {
         while(true){
             try{
                 User u = (User)ois.readObject();
-                users.put(u.getAcctNo(), u);
+                users.put(u.getUserNum(), u);
             }catch (EOFException e){
                 break;
             }
@@ -103,15 +123,23 @@ public class Bank {
         while(true){
             try{
                 Account a = (Account)ois.readObject();
-                accounts.put(a.getAccountNumber(), a);
+                accounts.put(a.getAccountNum(), a);
             }catch (EOFException e){
                 break;
             }
         }
     }
 
-    public void setBankNum(int bankNum){
-        this.bankNum = bankNum;
+    public void addUser(User u){
+        users.put(u.getUserNum(), u);
+    }
+
+    public void addAccount(Account a){
+        accounts.put(a.getAccountNum(), a);
+    }
+
+    public static Bank get(int num){
+        return banks.get(num);
     }
 
     public int getBankNum(){
@@ -132,5 +160,22 @@ public class Bank {
 
     public void setAccounts(HashMap<Integer, Account> accounts) {
         this.accounts = accounts;
+    }
+
+    private static int getNewBankNum() {
+        currentBankNum++;
+        return currentBankNum;
+    }
+
+    public static HashMap<Integer, Bank> getBanks() {
+        return banks;
+    }
+
+    public static void setBanks(HashMap<Integer, Bank> banks) {
+        Bank.banks = banks;
+    }
+
+    public String toString(){
+        return "" + bankNum;
     }
 }
