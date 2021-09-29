@@ -15,16 +15,16 @@ public class Bank implements Serializable{
 
     public Bank(){
         bankNum = getNewBankNum();
-//        try {
-//            try {
-//                readAccountsFromFile();
-//            }catch (EOFException ignored){}
-//            try {
-//                readUsersFromFile();
-//            }catch (EOFException ignored){}
-//        }catch(IOException | ClassNotFoundException e){
-//            e.printStackTrace();
-//        }
+        try {
+            try {
+                readAccounts();
+            }catch (EOFException ignored){}
+            try {
+                readUsers();
+            }catch (EOFException ignored){}
+        }catch(IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
         banks.put(bankNum, this);
     }
 
@@ -106,7 +106,7 @@ public class Bank implements Serializable{
     }
 
     @SuppressWarnings("unchecked")
-    public void readUsersFromFile() throws IOException, ClassNotFoundException{
+    public void readUsers() throws IOException, ClassNotFoundException{
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\users.txt"));
         try{
             Object obj = ois.readObject();
@@ -116,7 +116,7 @@ public class Bank implements Serializable{
     }
 
     @SuppressWarnings("unchecked")
-    public void readAccountsFromFile() throws IOException, ClassNotFoundException{
+    public void readAccounts() throws IOException, ClassNotFoundException{
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\accounts.txt"));
         try{
             Object obj = ois.readObject();
