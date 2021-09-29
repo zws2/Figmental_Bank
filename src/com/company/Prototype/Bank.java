@@ -1,3 +1,7 @@
+package com.company.Prototype;
+
+import com.company.Account;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.io.ObjectOutputStream;
