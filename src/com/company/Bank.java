@@ -8,14 +8,68 @@ import java.util.Scanner;
 
 public class Bank {
 
-    private String bankNum;
+    private int bankNum;
 
     private HashMap<Integer, User> users = new  HashMap<Integer, User>();
     private  HashMap<Integer, Account> accounts = new  HashMap<Integer, Account>();
 
-    public Bank(){}
+    public Bank(){
+        bankNum = 1;
+        try {
+            readAccountsFromFile();
+            readUsersFromFile();
+        }catch(IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+    }
 
-    //Serializing user to file
+    public void processTransaction(Transaction t){
+
+        switch(t.getTransactionType()){
+            case "transfer": makeTransfer(t);
+                break;
+            case "deposit": makeDeposit(t);
+                break;
+            case "withdraw": makeWithdrawal(t);
+                break;
+            default: break;
+        }
+    }
+
+    public void makeTransfer(Transaction t){
+        Account sender = accounts.get(t.getSenderNum());
+        Account receiver = accounts.get(t.getReceiverNum());
+
+        sender.withdraw(t.getAmount());
+        receiver.deposit(t.getAmount());
+
+        accounts.put(sender.getAccountNumber(), sender);
+        accounts.put(receiver.getAccountNumber(), receiver);
+
+        writeAccountToFile(sender);
+        writeAccountToFile(receiver);
+    }
+
+    public void makeWithdrawal(Transaction t){
+        Account sender = accounts.get(t.getSenderNum());
+
+        sender.withdraw(t.getAmount());
+
+        accounts.put(sender.getAccountNumber(), sender);
+
+        writeAccountToFile(sender);
+    }
+
+    public void makeDeposit(Transaction t){
+        Account receiver = accounts.get(t.getReceiverNum());
+
+        receiver.deposit(t.getAmount());
+
+        accounts.put(receiver.getAccountNumber(), receiver);
+
+        writeAccountToFile(receiver);
+    }
+
     public void writeUserToFile(User user){
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\users.txt"))){
             oos.writeObject(user);
@@ -24,7 +78,6 @@ public class Bank {
         }
     }
 
-    //Serializing Accounts to file
     public void writeAccountToFile(Account account){
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\accounts.txt"))){
             oos.writeObject(account);
@@ -33,7 +86,6 @@ public class Bank {
         }
     }
 
-    //Deserializing users from file
     public void readUsersFromFile() throws IOException, ClassNotFoundException{
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\users.txt"));
         while(true){
@@ -46,7 +98,6 @@ public class Bank {
         }
     }
 
-    //Deserializing Account from file
     public void readAccountsFromFile() throws IOException, ClassNotFoundException{
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\accounts.txt"));
         while(true){
@@ -59,11 +110,11 @@ public class Bank {
         }
     }
 
-    public void setBankNum(String bankNum){
+    public void setBankNum(int bankNum){
         this.bankNum = bankNum;
     }
 
-    public String getBankNum(){
+    public int getBankNum(){
         return bankNum;
     }
 
