@@ -56,8 +56,9 @@ public class Bank implements Serializable{
         accounts.put(sender.getAccountNum(), sender);
         accounts.put(receiver.getAccountNum(), receiver);
 
-        writeAccountToFile(sender);
-        writeAccountToFile(receiver);
+        putAccount(sender);
+        putAccount(receiver);
+        writeAccounts();
     }
 
     public void makeWithdrawal(Transaction t){
@@ -70,9 +71,8 @@ public class Bank implements Serializable{
 
         sender.withdraw(t.getAmount());
 
-        accounts.put(sender.getAccountNum(), sender);
-
-        writeAccountToFile(sender);
+        putAccount(sender);
+        writeAccounts();
     }
 
     public void makeDeposit(Transaction t){
@@ -85,56 +85,50 @@ public class Bank implements Serializable{
 
         receiver.deposit(t.getAmount());
 
-        accounts.put(receiver.getAccountNum(), receiver);
-
-        writeAccountToFile(receiver);
+        putAccount(receiver);
+        writeAccounts();
     }
 
-    public void writeUserToFile(User user){
+    public void writeUsers(){
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\users.txt"))){
-            oos.writeObject(user);
+            oos.writeObject(users);
         }catch(IOException e){
             e.printStackTrace();
         }
     }
 
-    public void writeAccountToFile(Account account){
+    public void writeAccounts(){
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\accounts.txt"))){
-            oos.writeObject(account);
+            oos.writeObject(accounts);
         }catch(IOException e){
             e.printStackTrace();
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void readUsersFromFile() throws IOException, ClassNotFoundException{
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\users.txt"));
-        while(true){
-            try{
-                User u = (User)ois.readObject();
-                users.put(u.getUserNum(), u);
-            }catch (EOFException e){
-                break;
-            }
-        }
+        try{
+            Object obj = ois.readObject();
+            if(obj instanceof HashMap) users = (HashMap<Integer, User>) obj;
+
+        }catch (EOFException ignored){}
     }
 
+    @SuppressWarnings("unchecked")
     public void readAccountsFromFile() throws IOException, ClassNotFoundException{
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\accounts.txt"));
-        while(true){
-            try{
-                Account a = (Account)ois.readObject();
-                accounts.put(a.getAccountNum(), a);
-            }catch (EOFException e){
-                break;
-            }
-        }
+        try{
+            Object obj = ois.readObject();
+            if(obj instanceof HashMap) accounts = (HashMap<Integer, Account>) obj;
+        }catch (EOFException ignored){}
     }
 
-    public void addUser(User u){
+    public void putUser(User u){
         users.put(u.getUserNum(), u);
     }
 
-    public void addAccount(Account a){
+    public void putAccount(Account a){
         accounts.put(a.getAccountNum(), a);
     }
 
