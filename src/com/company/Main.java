@@ -15,6 +15,16 @@ public class Main {
 
     }
 
+    private static void testReadUserOperation() {
+        Bank b = new Bank();
+        try{
+            b.readUsersFromFile();
+        }catch(IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        System.out.println(b);
+    }
+
     private static void init(){
         int option = 0;
         Display display = new Display();
