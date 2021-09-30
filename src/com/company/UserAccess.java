@@ -67,7 +67,6 @@ public class UserAccess {
         password = scan.nextLine();
 
         loginInfo.put(username, password);
-
     }
 
     public static void loginUser(Scanner scan) throws NullPointerException {

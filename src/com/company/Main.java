@@ -7,7 +7,6 @@ public class Main {
     public static void main(String[] args) {
 
         //init();
-
         //testAccount();
         //testTransaction();
 
@@ -16,13 +15,13 @@ public class Main {
     }
 
     private static void init(){
-        int option = 0;
-        Display display = new Display();
-//        UserAccess userAccess = new UserAccess();
 
-        Display.printHeader();
-        Display.printMainMenu();
+        Display display = new Display();
+
+        display.printHeader();
+        display.printMainMenu();
         display.getInput();
+
     }
 
     private static void testBank(){

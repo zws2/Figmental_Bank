@@ -7,14 +7,14 @@ public class Display {
     static Scanner scan = new Scanner(System.in);
 
 
-    static void printHeader() {
+    void printHeader() {
         System.out.println("*********************************************");
         System.out.println("*             Welcome to the                *");
         System.out.println("*             Figmental Bank                *");
         System.out.println("*********************************************");
     }
     //prints out a fancy menu of choices
-    static void printMainMenu() {
+    void printMainMenu() {
         System.out.println("*********************************************");
         System.out.println("Please choose one of the following options:");
         System.out.println("1) Existing Account Login");
