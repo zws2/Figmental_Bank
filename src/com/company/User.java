@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
+    private String userName;
+
     private String firstName;
 
     private String lastName;
@@ -20,11 +22,13 @@ public class User implements Serializable {
         firstName = "firstName";
         lastName = "lastName";
         userNum = getNewAccountNum();
+        userName = "" + userNum;
         balance = 0;
         password = "password";
     }
 
-    public User(String firstName, String lastName, double balance, String password){
+    public User(String userName, String firstName, String lastName, double balance, String password){
+        this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.userNum = getNewAccountNum();
@@ -32,7 +36,8 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public User(String firstName, String lastName, int userNum, double balance, String password){
+    public User(String userName, String firstName, String lastName, int userNum, double balance, String password){
+        this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.userNum = userNum;
@@ -40,6 +45,9 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public void setUserName(String userName){
+        this.userName = userName;
+    }
     public void setFirstName(String firstName){
         this.firstName = firstName;
     }
@@ -83,9 +91,11 @@ public class User implements Serializable {
     }
 
     public String toString(){
-        return firstName +
+        return userName +
+                ", " + firstName +
                 ", " + lastName +
                 ", " + userNum +
-                ", " + balance;
+                ", " + balance +
+                ", " + password;
     }
 }
