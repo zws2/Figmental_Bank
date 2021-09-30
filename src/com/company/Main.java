@@ -4,21 +4,21 @@ import java.io.IOException;
 
 //Collaborators: Zach Snyder, James Benton, Eileen Lowers
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         //init();
 
         //testAccount();
         //testTransaction();
 
-        testBank();
-
+//        testBank();
+        
     }
 
     private static void testReadUserOperation() {
         Bank b = new Bank();
         try{
-            b.readUsersFromFile();
+            b.readUsers();
         }catch(IOException | ClassNotFoundException e){
             e.printStackTrace();
         }
