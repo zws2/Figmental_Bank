@@ -1,101 +1,114 @@
 package com.company;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class User implements Serializable {
 
-    private String userName;
+    public static int currentUserNum = 100;
 
-    private String firstName;
-
-    private String lastName;
-
-    private final int userNum;
-
-    private double balance;
-
+    private final String userName;
     private String password;
 
-    public static int currentAccountNum = 10000;
+    private String firstName;
+    private String lastName;
+
+    private ArrayList<Integer> accountsNumbers;
 
     public User(){
+
+        userName = "" + getNewAccountNum();
+        password = "password";
+
         firstName = "firstName";
         lastName = "lastName";
-        userNum = getNewAccountNum();
-        userName = "" + userNum;
-        balance = 0;
-        password = "password";
+
+        accountsNumbers = new ArrayList<Integer>();
+
     }
 
-    public User(String userName, String firstName, String lastName, double balance, String password){
+    public User(String userName, String password){
+
         this.userName = userName;
+        this.password = password;
+
+        firstName = "firstName";
+        lastName = "lastName";
+
+        accountsNumbers = new ArrayList<Integer>();
+
+    }
+
+    public User(String userName, String password, String firstName, String lastName){
+        this.userName = userName;
+        this.password = password;
+
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userNum = getNewAccountNum();
-        this.balance = balance;
-        this.password = password;
+
+        accountsNumbers = new ArrayList<Integer>();
     }
 
-    public User(String userName, String firstName, String lastName, int userNum, double balance, String password){
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userNum = userNum;
-        this.balance = balance;
-        this.password = password;
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", accountsNumbers=" + accountsNumbers +
+                '}';
     }
 
-    public void setUserName(String userName){
-        this.userName = userName;
+    public boolean validateLogin(Bank b){
+//        b.getUsers()
+
+        return false;
     }
+
+    public static int getNewAccountNum(){
+        currentUserNum++;
+        return currentUserNum;
+    }
+
+    public void addAccountNum(int num){
+        accountsNumbers.add(num);
+    }
+
     public void setFirstName(String firstName){
         this.firstName = firstName;
     }
+
     public void setLastName(String lastName){
         this.lastName = lastName;
     }
-    public void setBalance(double balance){
-        this.balance = balance;
-    }
+
     public void setPassword(String password){
         this.password = password;
     }
 
-    public static int getNewAccountNum(){
-        currentAccountNum++;
-        return currentAccountNum;
+    public void setAccountsNumbers(ArrayList<Integer> accountsNumbers) {
+        this.accountsNumbers = accountsNumbers;
+    }
+
+    public String getUserName(){
+        return userName;
+    }
+
+    public String getPassword(){
+        return password;
     }
 
     public String getFirstName(){
         return firstName;
     }
+
     public String getLastName(){
         return lastName;
     }
-    public int getUserNum(){
-        return userNum;
-    }
-    public double getBalance(){
-        return balance;
-    }
-    public String getPassword(){
-        return password;
+
+    public ArrayList<Integer> getAccountsNumbers() {
+        return accountsNumbers;
     }
 
-    public String info(){
-        return "User Account : [First Name=" + firstName +
-                ", Last Name=" + lastName +
-                ", Account No.=" + userNum +
-                ", Balance :=" + balance +
-                "]";
-    }
-
-    public String toString(){
-        return userName +
-                ", " + firstName +
-                ", " + lastName +
-                ", " + userNum +
-                ", " + balance +
-                ", " + password;
-    }
 }

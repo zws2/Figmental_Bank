@@ -6,26 +6,27 @@ import java.util.HashMap;
 public class Bank implements Serializable{
 
     private final int bankNum;
-    private static int currentBankNum = 100;
+    private static int currentBankNum = 0;
 
-    private HashMap<Integer, User> users = new  HashMap<Integer, User>();
+    private HashMap<String, User> users = new  HashMap<String, User>();
     private HashMap<Integer, Account> accounts = new  HashMap<Integer, Account>();
 
     private static HashMap<Integer, Bank> banks = new  HashMap<Integer, Bank>();
 
     public Bank(){
         bankNum = getNewBankNum();
-        try {
-            try {
-                readAccounts();
-            }catch (EOFException ignored){}
-            try {
-                readUsers();
-            }catch (EOFException ignored){}
-        }catch(IOException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
+        readAccounts();
+        readUsers();
         banks.put(bankNum, this);
+    }
+
+    @Override
+    public String toString() {
+        return "Bank{" +
+                "bankNum=" + bankNum +
+                ", users=" + users +
+                ", accounts=" + accounts +
+                '}';
     }
 
     public void processTransaction(Transaction t){
@@ -106,26 +107,39 @@ public class Bank implements Serializable{
     }
 
     @SuppressWarnings("unchecked")
-    public void readUsers() throws IOException, ClassNotFoundException{
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\users.txt"));
+    public void readUsers() {
         try{
-            Object obj = ois.readObject();
-            if(obj instanceof HashMap) users = (HashMap<Integer, User>) obj;
+            try {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\users.txt"));
+                Object obj = ois.readObject();
+                if (obj instanceof HashMap) users = (HashMap<String, User>) obj;
 
-        }catch (EOFException ignored){}
+            } catch (EOFException ignored) {}
+        }catch(IOException | ClassNotFoundException e){
+                e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("unchecked")
-    public void readAccounts() throws IOException, ClassNotFoundException{
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\accounts.txt"));
+    public void readAccounts(){
         try{
-            Object obj = ois.readObject();
-            if(obj instanceof HashMap) accounts = (HashMap<Integer, Account>) obj;
-        }catch (EOFException ignored){}
+            try{
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\accounts.txt"));
+                Object obj = ois.readObject();
+                if(obj instanceof HashMap) accounts = (HashMap<Integer, Account>) obj;
+            }catch (EOFException ignored){}
+        }catch(IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
     }
 
     public void putUser(User u){
-        users.put(u.getUserNum(), u);
+        users.put(u.getUserName(), u);
+    }
+
+    public static int getNewBankNum() {
+        currentBankNum++;
+        return currentBankNum;
     }
 
     public void putAccount(Account a){
@@ -140,36 +154,29 @@ public class Bank implements Serializable{
         return bankNum;
     }
 
-    public HashMap<Integer, User> getUsers() {
+    public HashMap<String, User> getUsers() {
         return users;
     }
 
-    public void setUsers(HashMap<Integer, User> users) {
+    public void setUsers(HashMap<String, User> users) {
         this.users = users;
-    }
-
-    public HashMap<Integer, Account> getAccounts() {
-        return accounts;
     }
 
     public void setAccounts(HashMap<Integer, Account> accounts) {
         this.accounts = accounts;
     }
 
-    private static int getNewBankNum() {
-        currentBankNum++;
-        return currentBankNum;
+    public static void setBanks(HashMap<Integer, Bank> banks) {
+        Bank.banks = banks;
+    }
+
+    public HashMap<Integer, Account> getAccounts() {
+        return accounts;
     }
 
     public static HashMap<Integer, Bank> getBanks() {
         return banks;
     }
 
-    public static void setBanks(HashMap<Integer, Bank> banks) {
-        Bank.banks = banks;
-    }
 
-    public String toString(){
-        return "" + bankNum;
-    }
 }
