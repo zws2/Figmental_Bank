@@ -12,9 +12,20 @@ public class Main {
 //        testAccount();
 //        testTransaction();
 
-        testBank();
+//        testBank();
 
+        testReadUserOperation();
 
+    }
+
+    private static void testReadUserOperation() {
+        Bank b = new Bank();
+        try{
+            b.readUsersFromFile();
+        }catch(IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        System.out.println(b);
     }
 
     private static void init(){

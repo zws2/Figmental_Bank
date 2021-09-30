@@ -43,12 +43,15 @@ public class User implements Serializable {
     public void setFirstName(String firstName){
         this.firstName = firstName;
     }
+
     public void setLastName(String lastName){
         this.lastName = lastName;
     }
+
     public void setBalance(double balance){
         this.balance = balance;
     }
+
     public void setPassword(String password){
         this.password = password;
     }
@@ -61,15 +64,19 @@ public class User implements Serializable {
     public String getFirstName(){
         return firstName;
     }
+
     public String getLastName(){
         return lastName;
     }
+
     public int getUserNum(){
         return userNum;
     }
+
     public double getBalance(){
         return balance;
     }
+
     public String getPassword(){
         return password;
     }
