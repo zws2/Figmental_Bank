@@ -6,9 +6,9 @@ import java.util.HashMap;
 public class Bank implements Serializable{
 
     private final int bankNum;
-    private static int currentBankNum = 100;
+    private static int currentBankNum = 0;
 
-    private HashMap<Integer, User> users = new  HashMap<Integer, User>();
+    private HashMap<String, User> users = new  HashMap<String, User>();
     private HashMap<Integer, Account> accounts = new  HashMap<Integer, Account>();
 
     private static HashMap<Integer, Bank> banks = new  HashMap<Integer, Bank>();
@@ -18,6 +18,15 @@ public class Bank implements Serializable{
         readAccounts();
         readUsers();
         banks.put(bankNum, this);
+    }
+
+    @Override
+    public String toString() {
+        return "Bank{" +
+                "bankNum=" + bankNum +
+                ", users=" + users +
+                ", accounts=" + accounts +
+                '}';
     }
 
     public void processTransaction(Transaction t){
@@ -103,7 +112,7 @@ public class Bank implements Serializable{
             try {
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\users.txt"));
                 Object obj = ois.readObject();
-                if (obj instanceof HashMap) users = (HashMap<Integer, User>) obj;
+                if (obj instanceof HashMap) users = (HashMap<String, User>) obj;
 
             } catch (EOFException ignored) {}
         }catch(IOException | ClassNotFoundException e){
@@ -125,7 +134,12 @@ public class Bank implements Serializable{
     }
 
     public void putUser(User u){
-        users.put(u.getUserNum(), u);
+        users.put(u.getUserName(), u);
+    }
+
+    public static int getNewBankNum() {
+        currentBankNum++;
+        return currentBankNum;
     }
 
     public void putAccount(Account a){
@@ -140,36 +154,29 @@ public class Bank implements Serializable{
         return bankNum;
     }
 
-    public HashMap<Integer, User> getUsers() {
+    public HashMap<String, User> getUsers() {
         return users;
     }
 
-    public void setUsers(HashMap<Integer, User> users) {
+    public void setUsers(HashMap<String, User> users) {
         this.users = users;
-    }
-
-    public HashMap<Integer, Account> getAccounts() {
-        return accounts;
     }
 
     public void setAccounts(HashMap<Integer, Account> accounts) {
         this.accounts = accounts;
     }
 
-    private static int getNewBankNum() {
-        currentBankNum++;
-        return currentBankNum;
+    public static void setBanks(HashMap<Integer, Bank> banks) {
+        Bank.banks = banks;
+    }
+
+    public HashMap<Integer, Account> getAccounts() {
+        return accounts;
     }
 
     public static HashMap<Integer, Bank> getBanks() {
         return banks;
     }
 
-    public static void setBanks(HashMap<Integer, Bank> banks) {
-        Bank.banks = banks;
-    }
 
-    public String toString(){
-        return "" + bankNum;
-    }
 }
