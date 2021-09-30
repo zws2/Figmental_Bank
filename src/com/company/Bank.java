@@ -15,16 +15,8 @@ public class Bank implements Serializable{
 
     public Bank(){
         bankNum = getNewBankNum();
-        try {
-            try {
-                readAccounts();
-            }catch (EOFException ignored){}
-            try {
-                readUsers();
-            }catch (EOFException ignored){}
-        }catch(IOException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
+        readAccounts();
+        readUsers();
         banks.put(bankNum, this);
     }
 
@@ -106,22 +98,30 @@ public class Bank implements Serializable{
     }
 
     @SuppressWarnings("unchecked")
-    public void readUsers() throws IOException, ClassNotFoundException{
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\users.txt"));
+    public void readUsers() {
         try{
-            Object obj = ois.readObject();
-            if(obj instanceof HashMap) users = (HashMap<Integer, User>) obj;
+            try {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\users.txt"));
+                Object obj = ois.readObject();
+                if (obj instanceof HashMap) users = (HashMap<Integer, User>) obj;
 
-        }catch (EOFException ignored){}
+            } catch (EOFException ignored) {}
+        }catch(IOException | ClassNotFoundException e){
+                e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("unchecked")
-    public void readAccounts() throws IOException, ClassNotFoundException{
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\accounts.txt"));
+    public void readAccounts(){
         try{
-            Object obj = ois.readObject();
-            if(obj instanceof HashMap) accounts = (HashMap<Integer, Account>) obj;
-        }catch (EOFException ignored){}
+            try{
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\accounts.txt"));
+                Object obj = ois.readObject();
+                if(obj instanceof HashMap) accounts = (HashMap<Integer, Account>) obj;
+            }catch (EOFException ignored){}
+        }catch(IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
     }
 
     public void putUser(User u){

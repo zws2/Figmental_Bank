@@ -34,11 +34,8 @@ public class Main {
 
         b.writeUsers();
         b.getUsers().clear();
-        try{
-            b.readUsers();
-        }catch(IOException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
+
+        b.readUsers();
 
         User u1 = b.getUsers().get(u.getUserNum());
 
@@ -62,11 +59,7 @@ public class Main {
 
         b.getAccounts().clear();
 
-        try{
-            b.readAccounts();
-        }catch(IOException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
+        b.readAccounts();
 
         System.out.println("Accounts after read from file");
         for(Account a : b.getAccounts().values()){
