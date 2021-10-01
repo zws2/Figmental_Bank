@@ -64,9 +64,15 @@ public class User implements Serializable {
     }
 
     public boolean validateLogin(Bank b){
-//        b.getUsers()
+        User storedUser = b.getUsers().get(userName);
 
-        return false;
+        return (storedUser.password.equals(password));
+    }
+
+    public boolean userNameAvailable(Bank b){
+        User storedUser = b.getUsers().get(userName);
+
+        return (storedUser == null);
     }
 
     public static int getNewAccountNum(){
