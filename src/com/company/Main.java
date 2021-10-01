@@ -13,61 +13,59 @@ public class Main {
     }
 
     private static void init(){
-
         Display display = new Display();
 
-        display.printHeader();
-        display.printMainMenu();
-        display.printAccountMenu();
+        Bank.initBank();
 
+        Display.printHeader();
+        Display.printMainMenu();
+        display.getInput();
     }
 
     private static void testBank(){
 
         User u = new User();
-        Bank b = new Bank();
 
-        b.putUser(u);
+        Bank.putUser(u);
 
-        b.writeUsers();
-        b.getUsers().clear();
+        Bank.writeUsers();
+        Bank.getUsers().clear();
 
-        b.readUsers();
+        Bank.readUsers();
 
-        User u1 = b.getUsers().get(u.getUserName());
+        User u1 = Bank.getUsers().get(u.getUserName());
 
         if(u.toString().equals(u1.toString())) System.out.println("Successfully wrote and retrieved user from file");
         else System.out.println("Something went wrong...");
 
-        Account a1 = new Account(b.getBankNum());
-        Account a2 = new Account(b.getBankNum());
-        Account a3 = new Account(b.getBankNum());
+        Account a1 = new Account();
+        Account a2 = new Account();
+        Account a3 = new Account();
 
-        b.putAccount(a1);
-        b.putAccount(a2);
-        b.putAccount(a3);
+        Bank.putAccount(a1);
+        Bank.putAccount(a2);
+        Bank.putAccount(a3);
 
-        b.writeAccounts();
+        Bank.writeAccounts();
 
         System.out.println("Accounts after added to list");
-        for(Account a : b.getAccounts().values()){
+        for(Account a : Bank.getAccounts().values()){
             System.out.println(a);
         }
 
-        b.getAccounts().clear();
+        Bank.getAccounts().clear();
 
-        b.readAccounts();
+        Bank.readAccounts();
 
         System.out.println("Accounts after read from file");
-        for(Account a : b.getAccounts().values()){
+        for(Account a : Bank.getAccounts().values()){
             System.out.println(a);
         }
 
     }
 
     private static void testAccount(){
-        Bank b = new Bank();
-        Account a = new Account(b.getBankNum());
+        Account a = new Account();
         a.deposit(100d);
         System.out.println(a.accountDetails());
         a.withdraw(50d);
@@ -76,20 +74,18 @@ public class Main {
 
     private static void testTransaction(){
 
-        Bank b = new Bank();
-
         User u = new User();
 
-        Account a1 = new Account(b.getBankNum());
-        Account a2 = new Account(b.getBankNum());
+        Account a1 = new Account();
+        Account a2 = new Account();
 
-        b.putAccount(a1);
-        b.putAccount(a2);
+        Bank.putAccount(a1);
+        Bank.putAccount(a2);
 
         System.out.println(a1);
         System.out.println(a2);
 
-        Transaction t = new Transaction(b.getBankNum(),"transfer", a1.getAccountNum(),
+        Transaction t = new Transaction("transfer", a1.getAccountNum(),
                 a2.getAccountNum(), 100d);
         System.out.println(t);
 
