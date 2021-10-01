@@ -55,7 +55,7 @@ public class Display {
         switch (option) {
             case 1:
                 //option 1 - login existing account user
-                UserAccess.loginUser();
+//                UserAccess.loginUser();
                 break;
             case 2:
                 //option 2 - register new account
