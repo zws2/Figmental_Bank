@@ -1,6 +1,7 @@
 package com.company;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Bank implements Serializable{
@@ -11,6 +12,9 @@ public class Bank implements Serializable{
     private HashMap<String, User> users = new  HashMap<String, User>();
     private HashMap<Integer, Account> accounts = new  HashMap<Integer, Account>();
 
+    //creating file for transactions...adding transaction hashMap
+    private static ArrayList<Transaction> transactionArrayList = new ArrayList<>();
+
     private static HashMap<Integer, Bank> banks = new  HashMap<Integer, Bank>();
 
     public Bank(){
@@ -18,6 +22,23 @@ public class Bank implements Serializable{
         readAccounts();
         readUsers();
         banks.put(bankNum, this);
+    }
+
+    public static int getCurrentBankNum() {
+        return currentBankNum;
+    }
+
+    public static void setCurrentBankNum(int currentBankNum) {
+        Bank.currentBankNum = currentBankNum;
+    }
+
+    //transactionHashMap getter and setter lines 35 - 41
+    public ArrayList<Transaction> getTransactionHashMap() {
+        return transactionArrayList;
+    }
+
+    public void setTransactionHashMap(ArrayList<Transaction> transactionHashMap) {
+        transactionArrayList = transactionHashMap;
     }
 
     @Override
@@ -106,6 +127,15 @@ public class Bank implements Serializable{
         }
     }
 
+    //adding method to write transactionHashMap to file
+    public void writeTransaction(){
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\transaction.txt"))){
+            oos.writeObject(transactionArrayList);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public void readUsers() {
         try{
@@ -127,6 +157,19 @@ public class Bank implements Serializable{
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\accounts.txt"));
                 Object obj = ois.readObject();
                 if(obj instanceof HashMap) accounts = (HashMap<Integer, Account>) obj;
+            }catch (EOFException ignored){}
+        }catch(IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+
+    //adding method to read transactions from file
+    public void readTransaction(){
+        try{
+            try{
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\transaction.txt"));
+                Object obj = ois.readObject();
+                if(obj instanceof HashMap) transactionArrayList = (ArrayList<Transaction>) obj;
             }catch (EOFException ignored){}
         }catch(IOException | ClassNotFoundException e){
             e.printStackTrace();
@@ -177,6 +220,5 @@ public class Bank implements Serializable{
     public static HashMap<Integer, Bank> getBanks() {
         return banks;
     }
-
 
 }
