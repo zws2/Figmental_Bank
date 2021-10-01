@@ -12,7 +12,8 @@ public class Bank implements Serializable{
     private HashMap<String, User> users = new  HashMap<String, User>();
     private HashMap<Integer, Account> accounts = new  HashMap<Integer, Account>();
 
-    private static HashMap<Integer, Transaction> transactionHashMap = new HashMap<>();
+    //creating file for transactions...adding transaction hashMap
+    private static ArrayList<Transaction> transactionArrayList = new ArrayList<>();
 
     private static HashMap<Integer, Bank> banks = new  HashMap<Integer, Bank>();
 
@@ -31,12 +32,13 @@ public class Bank implements Serializable{
         Bank.currentBankNum = currentBankNum;
     }
 
-    public HashMap<Integer, Transaction> getTransactionHashMap() {
-        return transactionHashMap;
+    //transactionHashMap getter and setter lines 35 - 41
+    public ArrayList<Transaction> getTransactionHashMap() {
+        return transactionArrayList;
     }
 
-    public void setTransactionHashMap(HashMap<Integer, Transaction> transactionHashMap) {
-        this.transactionHashMap = transactionHashMap;
+    public void setTransactionHashMap(ArrayList<Transaction> transactionHashMap) {
+        transactionArrayList = transactionHashMap;
     }
 
     @Override
@@ -127,7 +129,7 @@ public class Bank implements Serializable{
 
     public void writeTransaction(){
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\transaction.txt"))){
-            oos.writeObject(transactionHashMap);
+            oos.writeObject(transactionArrayList);
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -165,7 +167,7 @@ public class Bank implements Serializable{
             try{
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\transaction.txt"));
                 Object obj = ois.readObject();
-                if(obj instanceof HashMap) transactionHashMap = (HashMap<Integer, Transaction>) obj;
+                if(obj instanceof HashMap) transactionArrayList = (ArrayList<Transaction>) obj;
             }catch (EOFException ignored){}
         }catch(IOException | ClassNotFoundException e){
             e.printStackTrace();
