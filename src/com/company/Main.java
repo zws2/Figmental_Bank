@@ -11,6 +11,7 @@ public class Main {
 
         testBank();
 
+        //NEW ADDITIONS IN BANK --> readTransaction(); - writeTransaction(); getter & setter - transactionHashMap<Integer, Transaction>
     }
 
     private static void init(){

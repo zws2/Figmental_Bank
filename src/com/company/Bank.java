@@ -11,6 +11,9 @@ public class Bank implements Serializable{
     private HashMap<String, User> users = new  HashMap<String, User>();
     private HashMap<Integer, Account> accounts = new  HashMap<Integer, Account>();
 
+    //creating file for transactions...adding transaction hashMap
+    private static HashMap<Integer, Transaction> transactionHashMap = new HashMap<>();
+
     private static HashMap<Integer, Bank> banks = new  HashMap<Integer, Bank>();
 
     public Bank(){
@@ -18,6 +21,23 @@ public class Bank implements Serializable{
         readAccounts();
         readUsers();
         banks.put(bankNum, this);
+    }
+
+    public static int getCurrentBankNum() {
+        return currentBankNum;
+    }
+
+    public static void setCurrentBankNum(int currentBankNum) {
+        Bank.currentBankNum = currentBankNum;
+    }
+
+    //transactionHashMap getter and setter lines 35 - 41
+    public HashMap<Integer, Transaction> getTransactionHashMap() {
+        return transactionHashMap;
+    }
+
+    public void setTransactionHashMap(HashMap<Integer, Transaction> transactionHashMap) {
+        this.transactionHashMap = transactionHashMap;
     }
 
     @Override
@@ -106,6 +126,15 @@ public class Bank implements Serializable{
         }
     }
 
+    //adding method to write transactionHashMap to file
+    public void writeTransaction(){
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\transaction.txt"))){
+            oos.writeObject(transactionHashMap);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public void readUsers() {
         try{
@@ -127,6 +156,19 @@ public class Bank implements Serializable{
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\accounts.txt"));
                 Object obj = ois.readObject();
                 if(obj instanceof HashMap) accounts = (HashMap<Integer, Account>) obj;
+            }catch (EOFException ignored){}
+        }catch(IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+
+    //adding method to read transactions from file
+    public void readTransaction(){
+        try{
+            try{
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\transaction.txt"));
+                Object obj = ois.readObject();
+                if(obj instanceof HashMap) transactionHashMap = (HashMap<Integer, Transaction>) obj;
             }catch (EOFException ignored){}
         }catch(IOException | ClassNotFoundException e){
             e.printStackTrace();
