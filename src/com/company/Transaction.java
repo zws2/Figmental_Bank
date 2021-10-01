@@ -33,13 +33,21 @@ public class Transaction implements Serializable {
         Bank.get(bankNum).processTransaction(this);
     }
 
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "bankNum=" + bankNum +
+                ", transactionType='" + transactionType + '\'' +
+                ", senderNum=" + senderNum +
+                ", receiverNum=" + receiverNum +
+                ", amount=" + amount +
+                ", timestamp='" + timestamp + '\'' +
+                '}';
+    }
+
     private String generateTimeStamp(){
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return f.format(System.currentTimeMillis());
-    }
-
-    public String toString(){
-        return bankNum + ", " + transactionType + ", " + senderNum + ", " + receiverNum + ", " + amount + ", " + timestamp;
     }
 
     public int getBank() {

@@ -1,7 +1,5 @@
 package com.company;
 
-import java.io.IOException;
-
 //Collaborators: Zach Snyder, James Benton, Eileen Lowers
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -55,20 +53,17 @@ public class Main {
 
         b.writeUsers();
         b.getUsers().clear();
-        try{
-            b.readUsers();
-        }catch(IOException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
 
-        User u1 = b.getUsers().get(u.getUserNum());
+        b.readUsers();
 
-        if(u.info().equals(u1.info())) System.out.println("Successfully wrote and retrieved user from file");
+        User u1 = b.getUsers().get(u.getUserName());
+
+        if(u.toString().equals(u1.toString())) System.out.println("Successfully wrote and retrieved user from file");
         else System.out.println("Something went wrong...");
 
-        Account a1 = new Account();
-        Account a2 = new Account();
-        Account a3 = new Account();
+        Account a1 = new Account(b.getBankNum());
+        Account a2 = new Account(b.getBankNum());
+        Account a3 = new Account(b.getBankNum());
 
         b.putAccount(a1);
         b.putAccount(a2);
@@ -83,11 +78,7 @@ public class Main {
 
         b.getAccounts().clear();
 
-        try{
-            b.readAccounts();
-        }catch(IOException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
+        b.readAccounts();
 
         System.out.println("Accounts after read from file");
         for(Account a : b.getAccounts().values()){

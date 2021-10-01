@@ -4,47 +4,54 @@ import java.io.Serializable;
 
 public class Account implements Serializable {
     private int bankNum;
-    private int userNum;
+    private String userName;
     private final int accountNum;
     private double balance;
 
     //this is used to generate new account nums so no duplicates are made
-    private static int currentAccountNum = 10000;
+    private static int currentAccountNum = 200;
 
-    public Account(int bankNum, int userNum, int accountNum, double balance) {
+    public Account(int bankNum, String userName, int accountNum, double balance) {
         this.bankNum = bankNum;
-        this.userNum = userNum;
+        this.userName = userName;
         this.accountNum = accountNum;
         this.balance = balance;
     }
 
-    public Account(int bankNum, int userNum) {
+    public Account(int bankNum, String userName) {
         this.bankNum = bankNum;
-        this.userNum = userNum;
+        this.userName = userName;
         this.accountNum = getNewAccountNum();
         balance = 0;
     }
 
     public Account(int bankNum) {
         this.bankNum = bankNum;
+        userName = "" + User.getNewAccountNum();
         accountNum = getNewAccountNum();
         balance = 0;
 
     }
 
     public Account() {
-        bankNum = 101;
-        userNum = 10001;
+        bankNum = Bank.getNewBankNum();
+        userName = "" + User.getNewAccountNum();
         accountNum = getNewAccountNum();
         balance = 0;
     }
 
-    public String toString(){
-        return bankNum + ", " + userNum + ", " + accountNum + ", " + balance;
+    @Override
+    public String toString() {
+        return "Account{" +
+                "bankNum=" + bankNum +
+                ", userName='" + userName + '\'' +
+                ", accountNum=" + accountNum +
+                ", balance=" + balance +
+                '}';
     }
 
     public String accountDetails(){
-        return userNum + "'s account\naccountNumber: " + accountNum
+        return userName + "'s account\naccountNumber: " + accountNum
                 + "\nbalance: " + balance;
     }
 
@@ -93,12 +100,12 @@ public class Account implements Serializable {
         this.bankNum = bankNum;
     }
 
-    public int getUserNum() {
-        return userNum;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserNum(int userNum) {
-        this.userNum = userNum;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public int getAccountNum() {
