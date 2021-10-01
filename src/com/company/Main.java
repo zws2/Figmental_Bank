@@ -6,6 +6,15 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
+
+//        init();
+
+//        testAccount();
+//        testTransaction();
+
+//        testBank();
+
+        testReadUserOperation();
         //init();
 
         //testAccount();
@@ -13,6 +22,8 @@ public class Main {
 
 //        testBank();
         
+        testBank();
+
     }
 
     private static void testReadUserOperation() {
