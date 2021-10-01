@@ -14,9 +14,10 @@ public class Main {
     }
 
     private static void init(){
-        int option = 0;
         Display display = new Display();
 //        UserAccess userAccess = new UserAccess();
+
+        Bank.initBank();
 
         Display.printHeader();
         Display.printMainMenu();
@@ -66,7 +67,6 @@ public class Main {
     }
 
     private static void testAccount(){
-        Bank b = new Bank();
         Account a = new Account();
         a.deposit(100d);
         System.out.println(a.accountDetails());
