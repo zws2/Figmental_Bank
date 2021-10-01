@@ -64,9 +64,12 @@ public class User implements Serializable {
 
     public ArrayList<Account> getAccounts(){
 
-//        bank
+        ArrayList<Account> accountsForUser = new ArrayList<Account>();
+        for(int num: accountNumbers){
+            accountsForUser.add(Bank.getAccounts().get(num));
+        }
 
-        return null;
+        return accountsForUser;
     }
 
     public boolean validateLogin(Bank b){
