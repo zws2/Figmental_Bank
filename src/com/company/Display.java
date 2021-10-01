@@ -13,6 +13,7 @@ public class Display {
         System.out.println("*             Figmental Bank                *");
         System.out.println("*********************************************");
     }
+
     //prints out a fancy menu of choices
     void printMainMenu() {
         System.out.println("*********************************************");
@@ -21,10 +22,21 @@ public class Display {
         System.out.println("2) Account Registration");
         System.out.println("3) Exit");
         System.out.println("*********************************************");
+        getMainInput();
+    }
+
+    void printAccountMenu() {
+        System.out.println("*********************************************");
+        System.out.println("Please choose one of the following options:");
+        System.out.println("1) Create New Account");
+        System.out.println("2) View Accounts");
+        System.out.println("3) Exit");
+        System.out.println("*********************************************");
+        manageAccountMenu();
     }
 
     //initializes option to zero, takes user input for MainMenu
-    void getInput() {
+    void getMainInput() {
         int option = 0;
         do {
             try {
@@ -43,11 +55,11 @@ public class Display {
     void userMenu(int option) {
         switch (option) {
             case 1:
-                //option 1 - login existing account user
+                //option 1 - login existing user
                 UserAccess.loginUser();
                 break;
             case 2:
-                //option 2 - register new account
+                //option 2 - register new user
                 UserAccess.registerUser();
                 break;
             case 3:
@@ -60,23 +72,55 @@ public class Display {
                 System.out.println("Whoops! Something done broke!");
                 userMenu(option);
         }
+    }
 
-        private void accountMenu(int option, User user) {
-            switch (option) {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    //option 3 - exit
-                    System.out.println("Thank you for banking with Figmental Bank!");
-                    System.exit(0);
-                    break;
-                default:
-                    //any other input results in error and returns to beginning of the method
-                    System.out.println("Whoops! Something done broke!");
-                    accountMenu(option);
+    private void manageAccountMenu() {
+        int option = 0;
+        switch (option) {
+            case 1:
+                //create new account
+                break;
+            case 2:
+                //select account / get account list method
+                break;
+            case 3:
+                //option 3 - exit
+                System.out.println("Thank you for banking with Figmental Bank!");
+                System.exit(0);
+                break;
+            default:
+                //any other input results in error and returns to beginning of the method
+                System.out.println("Whoops! Something done broke!");
+                viewAccountMenu(option);
         }
+    }
 
+    private void viewAccountMenu(int option) {
+        switch (option) {
+            case 1:
+                //balance
+                break;
+            case 2:
+                //deposit
+                break;
+            case 3:
+                //withdraw
+                break;
+            case 4:
+                //transfer
+                break;
+            case 5:
+                //transactions print
+                break;
+            case 6:
+                //exit
+                System.out.println("Thank you for banking with Figmental Bank!");
+                System.exit(0);
+                break;
+            default:
+                //any other input results in error and returns to beginning of the method
+                System.out.println("Whoops! Something done broke!");
+                viewAccountMenu(option);
+        }
     }
 }

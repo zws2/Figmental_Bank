@@ -88,24 +88,24 @@ public class UserAccess {
         String inputUser;
         String inputPW;
 
-        while (true) {
-            //user input to check username and password
-            System.out.println("Username: ");
-            inputUser = scan.nextLine();
-            if (!getUserName.containsKey(inputUser)) {
-                System.out.println("Invalid Login: User does not exist.\n");
-            }
-            else {
-                System.out.println("Password: ");
-                inputPW = scan.nextLine();
-                if(!loginInfo.get(inputUser).equals(inputPW)) {
-                    System.out.println("Invalid Login: Password does not match.\n");
-                }
-                else {
-                    System.out.println("Login Success!\n");
-                }
-            }
-        }
+//        while (true) {
+//            //user input to check username and password
+//            System.out.println("Username: ");
+//            inputUser = scan.nextLine();
+//            if (!getUserName.containsKey(inputUser)) {
+//                System.out.println("Invalid Login: User does not exist.\n");
+//            }
+//            else {
+//                System.out.println("Password: ");
+//                inputPW = scan.nextLine();
+//                if(!loginInfo.get(inputUser).equals(inputPW)) {
+//                    System.out.println("Invalid Login: Password does not match.\n");
+//                }
+//                else {
+//                    System.out.println("Login Success!\n");
+//                }
+//            }
+//        }
 
         //sends username and password to validLogin method to check against record
 //        User.validLogin(inputUser, inputPW);

@@ -18,7 +18,7 @@ public class Main {
 
         display.printHeader();
         display.printMainMenu();
-        display.getInput();
+        display.printAccountMenu();
 
     }
 
