@@ -6,51 +6,25 @@ import java.util.HashMap;
 
 public class Bank implements Serializable{
 
-    private final int bankNum;
-    private static int currentBankNum = 0;
+    private static HashMap<String, User> users = new  HashMap<String, User>();
+    private static HashMap<Integer, Account> accounts = new  HashMap<Integer, Account>();
 
-    private HashMap<String, User> users = new  HashMap<String, User>();
-    private HashMap<Integer, Account> accounts = new  HashMap<Integer, Account>();
-
-    //creating file for transactions...adding transaction hashMap
     private static ArrayList<Transaction> transactionArrayList = new ArrayList<>();
 
-    private static HashMap<Integer, Bank> banks = new  HashMap<Integer, Bank>();
-
-    public Bank(){
-        bankNum = getNewBankNum();
+    public void initBank(){
         readAccounts();
         readUsers();
-        banks.put(bankNum, this);
-    }
-
-    public static int getCurrentBankNum() {
-        return currentBankNum;
-    }
-
-    public static void setCurrentBankNum(int currentBankNum) {
-        Bank.currentBankNum = currentBankNum;
-    }
-
-    //transactionHashMap getter and setter lines 35 - 41
-    public ArrayList<Transaction> getTransactionHashMap() {
-        return transactionArrayList;
-    }
-
-    public void setTransactionHashMap(ArrayList<Transaction> transactionHashMap) {
-        transactionArrayList = transactionHashMap;
     }
 
     @Override
     public String toString() {
         return "Bank{" +
-                "bankNum=" + bankNum +
                 ", users=" + users +
                 ", accounts=" + accounts +
                 '}';
     }
 
-    public void processTransaction(Transaction t){
+    public static void processTransaction(Transaction t){
 
         switch(t.getTransactionType()){
             case "transfer": makeTransfer(t);
@@ -63,7 +37,7 @@ public class Bank implements Serializable{
         }
     }
 
-    public void makeTransfer(Transaction t){
+    public static void makeTransfer(Transaction t){
         Account sender = accounts.get(t.getSenderNum());
         Account receiver = accounts.get(t.getReceiverNum());
 
@@ -83,7 +57,7 @@ public class Bank implements Serializable{
         writeAccounts();
     }
 
-    public void makeWithdrawal(Transaction t){
+    public static void makeWithdrawal(Transaction t){
         Account sender = accounts.get(t.getSenderNum());
 
         if(sender == null) {
@@ -97,7 +71,7 @@ public class Bank implements Serializable{
         writeAccounts();
     }
 
-    public void makeDeposit(Transaction t){
+    public static void makeDeposit(Transaction t){
         Account receiver = accounts.get(t.getReceiverNum());
 
         if(receiver == null) {
@@ -111,7 +85,7 @@ public class Bank implements Serializable{
         writeAccounts();
     }
 
-    public void writeUsers(){
+    public static void writeUsers(){
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\users.txt"))){
             oos.writeObject(users);
         }catch(IOException e){
@@ -119,7 +93,7 @@ public class Bank implements Serializable{
         }
     }
 
-    public void writeAccounts(){
+    public static void writeAccounts(){
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\accounts.txt"))){
             oos.writeObject(accounts);
         }catch(IOException e){
@@ -127,7 +101,7 @@ public class Bank implements Serializable{
         }
     }
 
-    public void writeTransaction(){
+    public static void writeTransaction(){
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\transaction.txt"))){
             oos.writeObject(transactionArrayList);
         }catch(IOException e){
@@ -136,7 +110,7 @@ public class Bank implements Serializable{
     }
 
     @SuppressWarnings("unchecked")
-    public void readUsers() {
+    public static void readUsers() {
         try{
             try {
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\users.txt"));
@@ -150,7 +124,7 @@ public class Bank implements Serializable{
     }
 
     @SuppressWarnings("unchecked")
-    public void readAccounts(){
+    public static void readAccounts(){
         try{
             try{
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\accounts.txt"));
@@ -162,61 +136,48 @@ public class Bank implements Serializable{
         }
     }
 
-    public void readTransaction(){
+    @SuppressWarnings("unchecked")
+    public static void readTransaction(){
         try{
             try{
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\transaction.txt"));
                 Object obj = ois.readObject();
-                if(obj instanceof HashMap) transactionArrayList = (ArrayList<Transaction>) obj;
+                if(obj instanceof ArrayList) transactionArrayList = (ArrayList<Transaction>) obj;
             }catch (EOFException ignored){}
         }catch(IOException | ClassNotFoundException e){
             e.printStackTrace();
         }
     }
 
-    public void putUser(User u){
+    public static void putUser(User u){
         users.put(u.getUserName(), u);
     }
 
-    public static int getNewBankNum() {
-        currentBankNum++;
-        return currentBankNum;
-    }
-
-    public void putAccount(Account a){
+    public static void putAccount(Account a){
         accounts.put(a.getAccountNum(), a);
     }
 
-    public static Bank get(int num){
-        return banks.get(num);
-    }
-
-    public int getBankNum(){
-        return bankNum;
-    }
-
-    public HashMap<String, User> getUsers() {
+    public static HashMap<String, User> getUsers() {
         return users;
     }
 
-    public void setUsers(HashMap<String, User> users) {
-        this.users = users;
+    public static void setUsers(HashMap<String, User> users) {
+        Bank.users = users;
     }
 
-    public void setAccounts(HashMap<Integer, Account> accounts) {
-        this.accounts = accounts;
-    }
-
-    public static void setBanks(HashMap<Integer, Bank> banks) {
-        Bank.banks = banks;
-    }
-
-    public HashMap<Integer, Account> getAccounts() {
+    public static HashMap<Integer, Account> getAccounts() {
         return accounts;
     }
 
-    public static HashMap<Integer, Bank> getBanks() {
-        return banks;
+    public static void setAccounts(HashMap<Integer, Account> accounts) {
+        Bank.accounts = accounts;
     }
 
+    public static ArrayList<Transaction> getTransactionArrayList() {
+        return transactionArrayList;
+    }
+
+    public static void setTransactionArrayList(ArrayList<Transaction> transactionArrayList) {
+        Bank.transactionArrayList = transactionArrayList;
+    }
 }

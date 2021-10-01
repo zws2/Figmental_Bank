@@ -62,6 +62,13 @@ public class User implements Serializable {
                 '}';
     }
 
+    public ArrayList<Account> getAccounts(){
+
+//        bank
+
+        return null;
+    }
+
     public boolean validateLogin(Bank b){
         User storedUser = b.getUsers().get(userName);
 
