@@ -6,7 +6,6 @@ public class Display {
 
     static Scanner scan = new Scanner(System.in);
 
-
     void printHeader() {
         System.out.println("*********************************************");
         System.out.println("*             Welcome to the                *");
@@ -32,7 +31,7 @@ public class Display {
         System.out.println("2) View Accounts");
         System.out.println("3) Exit");
         System.out.println("*********************************************");
-        manageAccountMenu();
+        getAccountInput();
     }
 
     //initializes option to zero, takes user input for MainMenu
@@ -72,29 +71,26 @@ public class Display {
                 System.out.println("Whoops! Something done broke!");
                 userMenu(option);
         }
-
-        private void accountMenu(int option, User user) {
-            switch (option) {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    //option 3 - exit
-                    System.out.println("Thank you for banking with Figmental Bank!");
-                    System.exit(0);
-                    break;
-                default:
-                    //any other input results in error and returns to beginning of the method
-                    System.out.println("Whoops! Something done broke!");
-                    accountMenu(option);
-        }
-
     }
 
-    private void manageAccountMenu() {
-        int option = 0;
-        switch (option) {
+    void getAccountInput() {
+        int option2 = 0;
+        do {
+            try {
+                option2 = Integer.parseInt(scan.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Not a valid entry. Please enter option numbers.");
+            }
+            if (option2 < 1 || option2 > 3) {
+                System.out.println("Sorry! Your selection is out of option range.\nPlease enter a listed option.");
+            }
+        }
+        while (option2 < 1 || option2 > 3);
+        manageAccountMenu(option2);
+    }
+
+    private void manageAccountMenu(int option2) {
+        switch (option2) {
             case 1:
                 //create new account
                 break;
@@ -109,7 +105,7 @@ public class Display {
             default:
                 //any other input results in error and returns to beginning of the method
                 System.out.println("Whoops! Something done broke!");
-                viewAccountMenu(option);
+                manageAccountMenu(option2);
         }
     }
 
