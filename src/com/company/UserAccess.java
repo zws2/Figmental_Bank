@@ -1,31 +1,24 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class UserAccess {
 
 
-    static HashMap<String, String> loginInfo = new HashMap<>();
+    private static Bank bank;
 
-    UserAccess(HashMap<String, String> loginInfoNew) {
-        loginInfo = loginInfoNew;
+    UserAccess(Bank bank) {
+        this.bank = bank;
     }
 
-    public static void registerUser(Scanner scan) {
-        Random random = new Random();
+    public static void registerUser() {
+
+        Scanner scan = Display.scan;
 
         String firstName;
         String lastName;
-        String acctNo = "1";
-        double deposit = 0;
-        double balance = 0;
-        String username;
+        String userName;
         String password;
-
-        ArrayList<String> accountSet = new ArrayList<>();
 
         System.out.println("Thank you for creating an account with us.\n");
         System.out.println("Please enter your first name:");
@@ -33,15 +26,42 @@ public class UserAccess {
         System.out.println("Please enter your last name:");
         lastName = scan.nextLine();
 
-        for (int i = 0; i < 2; i++)
-        {
-            int n = random.nextInt(10);
-            acctNo += Integer.toString(n);
-        }
+        System.out.println("Thank you, " + firstName + lastName + "!\n" +
+                "Your User Account has been created!\n" +
+                "To access your account, please enter a username and secure password.\n");
 
-        System.out.println("Thank you, " + firstName + "!\n" +
-                "To open an account, we require a minimum balance of $5.\n" +
-                "How much would you like to deposit to open your account?");
+        System.out.println("Username: ");
+        userName = scan.nextLine();
+        System.out.println("Password: ");
+        password = scan.nextLine();
+
+        User user = new User(userName, password, firstName, lastName);
+        bank.putUser(user);
+        bank.writeUsers();
+
+        loginUser();
+    }
+
+    public static void registerAccount() {
+
+        Scanner scan = Display.scan;
+
+        double deposit = 0;
+
+        System.out.println("Would you like to open an account? \n" +
+                        "We require a minimum balance of $5.\n");
+
+        String reply = null;
+        do {
+            try {
+                reply = scan.nextLine();
+            } catch (Exception ignored) {
+                assert reply != null;
+                reply = reply.toLowerCase();
+            }
+        }while(!(reply.equals("yes") || reply.equals("no") || reply.equals("y") || reply.equals("n")));
+
+        System.out.println("How much would you like to deposit to open your account?");
         deposit = scan.nextDouble();
         if(!(deposit >= 5)) {
             System.out.println("The amount you entered does not meet the minimum.");
@@ -51,25 +71,15 @@ public class UserAccess {
             balance = balance + deposit;
         }
 
-        accountSet.add(firstName);
-        accountSet.add(lastName);
-        accountSet.add(acctNo);
-        accountSet.add(String.valueOf(balance));
-
-        System.out.println("Thank you, " + firstName + lastName + "!\n" +
-                "Your account has been created!\n" +
-                "Your account number is " + acctNo + "and your new balance is " + balance + ".\n" +
-                "To access your account, please enter a username and secure password.\n");
-
-        System.out.println("Username: ");
-        username = scan.nextLine();
-        System.out.println("Password: ");
-        password = scan.nextLine();
-
-        loginInfo.put(username, password);
+        Account account = new Account();
+        bank.putAccount(account);
+        bank.writeAccounts();
     }
 
-    public static void loginUser(Scanner scan) throws NullPointerException {
+    public static void loginUser() throws NullPointerException {
+
+        Scanner scan = Display.scan;
+
         String inputUser;
         String inputPW;
 
@@ -77,7 +87,7 @@ public class UserAccess {
             //user input to check username and password
             System.out.println("Username: ");
             inputUser = scan.nextLine();
-            if (!loginInfo.containsKey(inputUser)) {
+            if (!getUserName.containsKey(inputUser)) {
                 System.out.println("Invalid Login: User does not exist.\n");
             }
             else {
