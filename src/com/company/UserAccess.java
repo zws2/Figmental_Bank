@@ -88,6 +88,42 @@ public class UserAccess {
         String inputUser;
         String inputPW;
 
+        while (true) {
+            //user input to check username and password
+            System.out.println("Username: ");
+            inputUser = scan.nextLine();
+            if (!getUserName.containsKey(inputUser)) {
+                System.out.println("Invalid Login: User does not exist.\n");
+            }
+        }while(!(reply.equals("yes") || reply.equals("no") || reply.equals("y") || reply.equals("n")));
+
+        System.out.println("How much would you like to deposit to open your account?");
+        do {
+            try {
+                deposit = scan.nextDouble();
+                if(!(deposit >= 5)) {
+                    System.out.println("The amount you entered does not meet the minimum.");
+                }
+            } catch (Exception ignored) {
+            }
+        }while(deposit < 5d);
+
+        System.out.println("The amount you entered is $" + deposit + ".");
+
+        Account account = new Account();
+        bank.putAccount(account);
+        bank.writeAccounts();
+
+        account.depositTransaction(int bankNum, String userName, int accountNum, double balance);
+    }
+
+    public static void loginUser() throws NullPointerException {
+
+        Scanner scan = Display.scan;
+
+        String inputUser;
+        String inputPW;
+
 //        while (true) {
 //            //user input to check username and password
 //            System.out.println("Username: ");

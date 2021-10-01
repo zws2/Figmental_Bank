@@ -55,11 +55,11 @@ public class Display {
     void userMenu(int option) {
         switch (option) {
             case 1:
-                //option 1 - login existing user
+                //option 1 - login existing account user
                 UserAccess.loginUser();
                 break;
             case 2:
-                //option 2 - register new user
+                //option 2 - register new account
                 UserAccess.registerUser();
                 break;
             case 3:
@@ -72,6 +72,24 @@ public class Display {
                 System.out.println("Whoops! Something done broke!");
                 userMenu(option);
         }
+
+        private void accountMenu(int option, User user) {
+            switch (option) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    //option 3 - exit
+                    System.out.println("Thank you for banking with Figmental Bank!");
+                    System.exit(0);
+                    break;
+                default:
+                    //any other input results in error and returns to beginning of the method
+                    System.out.println("Whoops! Something done broke!");
+                    accountMenu(option);
+        }
+
     }
 
     private void manageAccountMenu() {
