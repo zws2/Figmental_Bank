@@ -44,11 +44,11 @@ public class Display {
         switch (option) {
             case 1:
                 //option 1 - login existing account user
-                UserAccess.loginUser(scan);
+                UserAccess.loginUser();
                 break;
             case 2:
                 //option 2 - register new account
-                UserAccess.registerUser(scan);
+                UserAccess.registerUser();
                 break;
             case 3:
                 //option 3 - exit
