@@ -2,36 +2,16 @@ package com.company;
 
 //Collaborators: Zach Snyder, James Benton, Eileen Lowers
 public class Main {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) {
 
-
-//        init();
-
-//        testAccount();
-//        testTransaction();
-
-//        testBank();
-
-        testReadUserOperation();
         //init();
 
         //testAccount();
         //testTransaction();
 
-//        testBank();
-        
         testBank();
 
-    }
-
-    private static void testReadUserOperation() {
-        Bank b = new Bank();
-        try{
-            b.readUsers();
-        }catch(IOException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
-        System.out.println(b);
+        //NEW ADDITIONS IN BANK --> readTransaction(); - writeTransaction(); getter & setter - transactionHashMap<Integer, Transaction>
     }
 
     private static void init(){
