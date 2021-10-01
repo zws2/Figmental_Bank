@@ -42,7 +42,7 @@ public class UserAccess {
         double deposit = 0;
 
         System.out.println("Would you like to open an account? \n" +
-                        "We require a minimum balance of $5.\n");
+                "We require a minimum balance of $5.\n");
 
         String reply = null;
         do {
@@ -52,18 +52,18 @@ public class UserAccess {
                 assert reply != null;
                 reply = reply.toLowerCase();
             }
-        }while(!(reply.equals("yes") || reply.equals("no") || reply.equals("y") || reply.equals("n")));
+        } while (!(reply.equals("yes") || reply.equals("no") || reply.equals("y") || reply.equals("n")));
 
         System.out.println("How much would you like to deposit to open your account?");
         do {
             try {
                 deposit = scan.nextDouble();
-                if(!(deposit >= 5)) {
+                if (!(deposit >= 5)) {
                     System.out.println("The amount you entered does not meet the minimum.");
                 }
             } catch (Exception ignored) {
             }
-        }while(deposit < 5d);
+        } while (deposit < 5d);
 
         System.out.println("The amount you entered is $" + deposit + ".");
 
@@ -74,33 +74,30 @@ public class UserAccess {
 //        account.depositTransaction(int bankNum, String userName, int accountNum, double balance);
     }
 
-//    public static void loginUser() {
-//
-//        Scanner scan = Display.scan;
-//
-//        String inputUser;
-//        String inputPW;
-//
-//        while (true) {
-//            //user input to check username and password
-//            System.out.println("Username: ");
-//            inputUser = scan.nextLine();
-//            if (!getUserName.containsKey(inputUser)) {
-//                System.out.println("Invalid Login: User does not exist.\n");
-//            }
-//            else {
-//                System.out.println("Password: ");
-//                inputPW = scan.nextLine();
-//                if(!loginInfo.get(inputUser).equals(inputPW)) {
-//                    System.out.println("Invalid Login: Password does not match.\n");
-//                }
-//                else {
-//                    System.out.println("Login Success!\n");
-//                }
-//            }
-//        }
+    public static void loginUser() {
 
-        //sends username and password to validLogin method to check against record
-//        User.validLogin(inputUser, inputPW);
-//    }
+        Scanner scan = Display.scan;
+
+        String inputUser;
+        String inputPW;
+
+        while (true) {
+            //user input to check username and password
+            System.out.println("Username: ");
+            inputUser = scan.nextLine();
+            //check to see if inputUser is an existing account
+            if ("inputUser does not exist") {
+                System.out.println("Invalid Login: User does not exist.\n");
+            } else {
+                System.out.println("Password: ");
+                inputPW = scan.nextLine();
+                if ("password does not exist") {
+                    System.out.println("Invalid Login: Password does not match.\n");
+                } else {
+                    System.out.println("Login Success!\n");
+                    Display.printAccountMenu();
+                }
+            }
+        }
+    }
 }

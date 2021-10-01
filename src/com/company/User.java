@@ -62,7 +62,7 @@ public class User implements Serializable {
                 '}';
     }
 
-    public ArrayList<Account> getAccounts(){
+    public static ArrayList<Account> getAccounts(){
 
         ArrayList<Account> accountsForUser = new ArrayList<Account>();
         for(int num: accountNumbers){

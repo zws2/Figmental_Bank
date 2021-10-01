@@ -19,7 +19,6 @@ public class Main {
 
         Display.printHeader();
         Display.printMainMenu();
-        display.getInput();
     }
 
     private static void testBank(){
