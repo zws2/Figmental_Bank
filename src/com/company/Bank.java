@@ -1,6 +1,7 @@
 package com.company;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Bank implements Serializable{
@@ -219,6 +220,5 @@ public class Bank implements Serializable{
     public static HashMap<Integer, Bank> getBanks() {
         return banks;
     }
-
 
 }

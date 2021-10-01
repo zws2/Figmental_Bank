@@ -15,6 +15,9 @@ public class User implements Serializable {
 
     private ArrayList<Integer> accountsNumbers;
 
+    //using arraylist to store user transactions
+    private ArrayList<Transaction> userTransactions = new ArrayList<>();
+
     public User(){
 
         userName = "" + getNewAccountNum();
@@ -111,4 +114,17 @@ public class User implements Serializable {
         return accountsNumbers;
     }
 
+    //setter and getter for userTransactions
+    public ArrayList<Transaction> getUserTransactions() {
+        return userTransactions;
+    }
+
+    public void setUserTransactions(ArrayList<Transaction> userTransactions) {
+        this.userTransactions = userTransactions;
+    }
+
+    //add a new transaction for user
+    public void addUserTransaction(Transaction transaction){
+        userTransactions.add(transaction);
+    }
 }
