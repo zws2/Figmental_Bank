@@ -12,7 +12,6 @@ public class Bank implements Serializable{
     private HashMap<String, User> users = new  HashMap<String, User>();
     private HashMap<Integer, Account> accounts = new  HashMap<Integer, Account>();
 
-    //creating file for transactions...adding transaction hashMap
     private static HashMap<Integer, Transaction> transactionHashMap = new HashMap<>();
 
     private static HashMap<Integer, Bank> banks = new  HashMap<Integer, Bank>();
@@ -32,7 +31,6 @@ public class Bank implements Serializable{
         Bank.currentBankNum = currentBankNum;
     }
 
-    //transactionHashMap getter and setter lines 35 - 41
     public HashMap<Integer, Transaction> getTransactionHashMap() {
         return transactionHashMap;
     }
@@ -127,7 +125,6 @@ public class Bank implements Serializable{
         }
     }
 
-    //adding method to write transactionHashMap to file
     public void writeTransaction(){
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\transaction.txt"))){
             oos.writeObject(transactionHashMap);
@@ -163,7 +160,6 @@ public class Bank implements Serializable{
         }
     }
 
-    //adding method to read transactions from file
     public void readTransaction(){
         try{
             try{

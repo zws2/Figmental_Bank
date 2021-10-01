@@ -27,7 +27,7 @@ public class Account implements Serializable {
 
     public Account(int bankNum) {
         this.bankNum = bankNum;
-        userName = "" + User.getNewAccountNum();
+        userName = "" + User.newUserNum();
         accountNum = getNewAccountNum();
         balance = 0;
 
@@ -35,7 +35,7 @@ public class Account implements Serializable {
 
     public Account() {
         bankNum = Bank.getNewBankNum();
-        userName = "" + User.getNewAccountNum();
+        userName = "" + User.newUserNum();
         accountNum = getNewAccountNum();
         balance = 0;
     }
