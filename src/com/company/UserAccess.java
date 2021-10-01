@@ -42,7 +42,7 @@ public class UserAccess {
         loginUser();
     }
 
-    public static void registerAccount() {
+    public static void registerAccount(User user) {
 
         Scanner scan = Display.scan;
 
@@ -62,18 +62,23 @@ public class UserAccess {
         }while(!(reply.equals("yes") || reply.equals("no") || reply.equals("y") || reply.equals("n")));
 
         System.out.println("How much would you like to deposit to open your account?");
-        deposit = scan.nextDouble();
-        if(!(deposit >= 5)) {
-            System.out.println("The amount you entered does not meet the minimum.");
-        }
-        else {
-            System.out.println("The amount you entered is $" + deposit + ".");
-            balance = balance + deposit;
-        }
+        do {
+            try {
+                deposit = scan.nextDouble();
+                if(!(deposit >= 5)) {
+                    System.out.println("The amount you entered does not meet the minimum.");
+                }
+            } catch (Exception ignored) {
+            }
+        }while(deposit < 5d);
+
+        System.out.println("The amount you entered is $" + deposit + ".");
 
         Account account = new Account();
         bank.putAccount(account);
         bank.writeAccounts();
+
+        account.depositTransaction(int bankNum, String userName, int accountNum, double balance);
     }
 
     public static void loginUser() throws NullPointerException {
