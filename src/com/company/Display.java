@@ -93,12 +93,12 @@ public class Display {
         switch (option) {
             case 1:
                 //create new account
-                Account account = new Account();
-                Bank.putAccount(account);
-                Bank.writeAccounts();
+                //add to bank hashmap - HashMap<Integer, Account> accounts
+                //add to userlist - addAccountNum?
                 break;
             case 2:
                 //select account / get account list method
+                printAccountList();
                 break;
             case 3:
                 //option 3 - exit
@@ -149,7 +149,6 @@ public class Display {
     private static void printBalance() {
     }
     private static void inputDeposit() {
-
     }
     private static void inputWithdraw() {
     }
@@ -157,4 +156,8 @@ public class Display {
     }
     private static void printTransaction() {
     }
+    private static void printAccountList() {
+        //getAccountNumbers?
+    }
+
 }
