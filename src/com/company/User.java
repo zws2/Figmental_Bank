@@ -72,14 +72,14 @@ public class User implements Serializable {
         return accountsForUser;
     }
 
-    public boolean validateLogin(Bank b){
-        User storedUser = b.getUsers().get(userName);
+    public boolean validateLogin(){
+        User storedUser = Bank.getUsers().get(userName);
 
         return (storedUser.password.equals(password));
     }
 
-    public boolean userNameAvailable(Bank b){
-        User storedUser = b.getUsers().get(userName);
+    public boolean userNameAvailable(){
+        User storedUser = Bank.getUsers().get(userName);
 
         return (storedUser == null);
     }

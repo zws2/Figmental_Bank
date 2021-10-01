@@ -8,10 +8,9 @@ public class Bank implements Serializable{
 
     private static HashMap<String, User> users = new  HashMap<String, User>();
     private static HashMap<Integer, Account> accounts = new  HashMap<Integer, Account>();
-
     private static ArrayList<Transaction> transactionArrayList = new ArrayList<>();
 
-    public void initBank(){
+    public static void initBank(){
         readAccounts();
         readUsers();
     }
