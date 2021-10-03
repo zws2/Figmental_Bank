@@ -25,7 +25,6 @@ public class Bank implements Serializable{
     }
 
     public static void processTransaction(Transaction t){
-
         switch(t.getTransactionType()){
             case "transfer": makeTransfer(t);
                 break;
