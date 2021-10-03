@@ -13,21 +13,19 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
 
-    private ArrayList<Integer> accountsNumbers;
+    private ArrayList<Integer> accountNumbers;
 
-    //using arraylist to store user transactions
     private ArrayList<Transaction> userTransactions = new ArrayList<>();
 
     public User(){
 
-        userName = "" + getNewAccountNum();
+        userName = "" + newUserNum();
         password = "password";
 
         firstName = "firstName";
         lastName = "lastName";
 
-        accountsNumbers = new ArrayList<Integer>();
-
+        accountNumbers = new ArrayList<Integer>();
     }
 
     public User(String userName, String password){
@@ -38,8 +36,7 @@ public class User implements Serializable {
         firstName = "firstName";
         lastName = "lastName";
 
-        accountsNumbers = new ArrayList<Integer>();
-
+        accountNumbers = new ArrayList<Integer>();
     }
 
     public User(String userName, String password, String firstName, String lastName){
@@ -49,7 +46,7 @@ public class User implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
 
-        accountsNumbers = new ArrayList<Integer>();
+        accountNumbers = new ArrayList<Integer>();
     }
 
     @Override
@@ -59,29 +56,37 @@ public class User implements Serializable {
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", accountsNumbers=" + accountsNumbers +
+                ", accountsNumbers=" + accountNumbers +
                 '}';
     }
 
-    public boolean validateLogin(Bank b){
-        User storedUser = b.getUsers().get(userName);
+    public ArrayList<Account> getAccounts(){
 
-        return (storedUser.password.equals(password));
+        ArrayList<Account> accountsForUser = new ArrayList<Account>();
+        for(int num: accountNumbers){
+            accountsForUser.add(Bank.getAccounts().get(num));
+        }
+
+        return accountsForUser;
     }
 
-    public boolean userNameAvailable(Bank b){
-        User storedUser = b.getUsers().get(userName);
-
-        return (storedUser == null);
+    public boolean validateLogin() {
+        User storedUser = Bank.getUsers().get(userName);
+        if(storedUser !=null) {
+            return (storedUser.password.equals(password));
+        }
+        else {
+            return false;
+        }
     }
 
-    public static int getNewAccountNum(){
+    public static int newUserNum(){
         currentUserNum++;
         return currentUserNum;
     }
 
     public void addAccountNum(int num){
-        accountsNumbers.add(num);
+        accountNumbers.add(num);
     }
 
     public void setFirstName(String firstName){
@@ -96,8 +101,8 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public void setAccountsNumbers(ArrayList<Integer> accountsNumbers) {
-        this.accountsNumbers = accountsNumbers;
+    public void setAccountNumbers(ArrayList<Integer> accountNumbers) {
+        this.accountNumbers = accountNumbers;
     }
 
     public String getUserName(){
@@ -116,11 +121,10 @@ public class User implements Serializable {
         return lastName;
     }
 
-    public ArrayList<Integer> getAccountsNumbers() {
-        return accountsNumbers;
+    public ArrayList<Integer> getAccountNumbers() {
+        return accountNumbers;
     }
 
-    //setter and getter for userTransactions
     public ArrayList<Transaction> getUserTransactions() {
         return userTransactions;
     }
@@ -129,7 +133,6 @@ public class User implements Serializable {
         this.userTransactions = userTransactions;
     }
 
-    //add a new transaction for user
     public void addUserTransaction(Transaction transaction){
         userTransactions.add(transaction);
     }
