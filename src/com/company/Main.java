@@ -4,11 +4,11 @@ package com.company;
 public class Main {
     public static void main(String[] args) {
 
-        //init();
+        init();
         //testAccount();
         //testTransaction();
 
-        testBank();
+//        testBank();
 
     }
 
@@ -16,9 +16,7 @@ public class Main {
         Display display = new Display();
 
         Bank.initBank();
-
-        Display.printHeader();
-        Display.printMainMenu();
+        Display.startMenu();
     }
 
     private static void testBank(){

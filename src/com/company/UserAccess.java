@@ -19,12 +19,13 @@ public class UserAccess {
         System.out.println("Please enter your last name:");
         lastName = scan.nextLine();
 
-        System.out.println("Thank you, " + firstName + lastName + "!\n" +
-                "Your User Account has been created!\n" +
+        System.out.println("Thank you, " + firstName + "!\n" +
                 "To access your account, please enter a username and secure password.\n");
-
         System.out.println("Username: ");
         userName = scan.nextLine();
+
+        //checking username exists?
+
         System.out.println("Password: ");
         password = scan.nextLine();
 
@@ -32,7 +33,10 @@ public class UserAccess {
         Bank.putUser(user);
         Bank.writeUsers();
 
-//        loginUser();
+        //returns to user login menu
+        System.out.println("Your account has been created!\n" +
+                "Please login to continue or use option 3 to exit.");
+        Display.printUserMenu();
     }
 
     public static void registerAccount(User user) {
@@ -74,30 +78,37 @@ public class UserAccess {
 //        account.depositTransaction(int bankNum, String userName, int accountNum, double balance);
     }
 
-    public static void loginUser() {
-
+    public static User loginUser() {
         Scanner scan = Display.scan;
+        int attempts = 0;
 
-        String inputUser;
-        String inputPW;
+        String inputUserName;
+        String inputPassWord;
 
-        while (true) {
-            //user input to check username and password
+        do {
+            System.out.println("Login");
+            //user input to collect username and password
             System.out.println("Username: ");
-            inputUser = scan.nextLine();
-            //check to see if inputUser is an existing account
-            if ("inputUser does not exist") {
-                System.out.println("Invalid Login: User does not exist.\n");
-            } else {
-                System.out.println("Password: ");
-                inputPW = scan.nextLine();
-                if ("password does not exist") {
-                    System.out.println("Invalid Login: Password does not match.\n");
-                } else {
-                    System.out.println("Login Success!\n");
-                    Display.printAccountMenu();
-                }
+            inputUserName = scan.nextLine();
+            System.out.println("Password: ");
+            inputPassWord = scan.nextLine();
+
+            //validating username and password
+            User currentUser = new User(inputUserName, inputPassWord);
+
+            boolean validUser = currentUser.validateLogin();
+
+            if (!validUser) {
+                System.out.println("Invalid Login: User or password does not exist.\n");
+                attempts++;
             }
-        }
+            if (validUser) {
+                System.out.println("Login Success!\n");
+                return currentUser;
+            }
+        } while (attempts < 3);
+
+        System.out.println("You have exceeded the maximum number of login attempts.\n");
+        return null;
     }
 }
