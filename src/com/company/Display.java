@@ -95,6 +95,7 @@ public class Display {
                     printAccountMenu(currentUser);
                 } else {
                     System.out.println("Invalid login!");
+                    printUserMenu();
                 }
                 break;
             case 2:
