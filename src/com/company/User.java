@@ -26,7 +26,6 @@ public class User implements Serializable {
         lastName = "lastName";
 
         accountNumbers = new ArrayList<Integer>();
-
     }
 
     public User(String userName, String password){
@@ -38,7 +37,6 @@ public class User implements Serializable {
         lastName = "lastName";
 
         accountNumbers = new ArrayList<Integer>();
-
     }
 
     public User(String userName, String password, String firstName, String lastName){
@@ -72,10 +70,14 @@ public class User implements Serializable {
         return accountsForUser;
     }
 
-    public boolean validateLogin(){
+    public boolean validateLogin() {
         User storedUser = Bank.getUsers().get(userName);
-
-        return (storedUser.password.equals(password));
+        if(storedUser !=null) {
+            return (storedUser.password.equals(password));
+        }
+        else {
+            return false;
+        }
     }
 
     public boolean userNameAvailable(){

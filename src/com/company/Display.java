@@ -1,11 +1,17 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Display {
 
     static Scanner scan = new Scanner(System.in);
+    static int option = 0;
 
+    public static void startMenu() {
+        printHeader();
+        printUserMenu();
+    }
 
     static void printHeader() {
         System.out.println("*********************************************");
@@ -13,14 +19,16 @@ public class Display {
         System.out.println("*             Figmental Bank                *");
         System.out.println("*********************************************");
     }
+
     //prints out a fancy menu of choices
-    static void printMainMenu() {
+    static void printUserMenu() {
         System.out.println("*********************************************");
         System.out.println("Please choose one of the following options:");
         System.out.println("1) Existing Account Login");
         System.out.println("2) Account Registration");
         System.out.println("3) Exit");
         System.out.println("*********************************************");
+        userMenu();
     }
 
     private static void printAccountMenu(User currentUser) {
@@ -84,15 +92,20 @@ public class Display {
         return amount;
     }
 
-    void performAction(int option) {
-        switch (option) {
+    static void userMenu() {
+        switch (getInput()) {
             case 1:
-                //option 1 - login existing account user
-                UserAccess.loginUser(scan);
+                //option 1 - login existing user
+                User currentUser = UserAccess.loginUser();
+                if(currentUser != null) {
+                    printAccountMenu(currentUser);
+                } else {
+                    System.out.println("Invalid login!");
+                }
                 break;
             case 2:
-                //option 2 - register new account
-                UserAccess.registerUser(scan);
+                //option 2 - register new user
+                UserAccess.registerUser();
                 break;
             case 3:
                 //option 3 - exit
@@ -102,8 +115,9 @@ public class Display {
             default:
                 //any other input results in error and returns to beginning of the method
                 System.out.println("Whoops! Something done broke!");
-                performAction(option);
+                userMenu();
         }
+
     }
 
     static void manageAccountsForUserMenu(User currentUser) {
