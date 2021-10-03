@@ -56,19 +56,15 @@ public class Account implements Serializable {
     }
 
     //A person deposits money into their own account.
-    public Transaction depositTransaction(double amount){
-        balance += amount;
-        //Bank.writeAccountToFile(this);
-        return new Transaction("deposit", accountNum, amount);
+    public void depositTransaction(double amount){
+        new Transaction("deposit", accountNum, amount);
     }
 
     //A person withdraws from their own account.
-    public Transaction withdrawTransaction(double amount){
+    public void withdrawTransaction(double amount){
         if(balance >= amount){
-            balance -= amount;
-            //Bank.writeAccountToFile(this);
-            return new Transaction("withdraw", accountNum, amount);
-        }else return new Transaction("declined", accountNum, amount);
+            new Transaction("withdraw", accountNum, amount);
+        }else new Transaction("declined", accountNum, amount);
     }
 
     //an account transfers money to another account
