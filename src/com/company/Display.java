@@ -1,12 +1,9 @@
 package com.company;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import static com.company.DisplayLogic.*;
 
 public class Display {
-
-    static Scanner scan = new Scanner(System.in);
-    static int option = 0;
 
     public static void startMenu() {
         printHeader();
@@ -73,38 +70,27 @@ public class Display {
         manageAccountMenu(currentAccount);
     }
 
-    //initializes option to zero, takes user input for Menus
-    static int getInput() {
-        int option = 0;
-        try {
-            option = Integer.parseInt(scan.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Not a valid entry. Please enter option numbers.");
-        }
-        return option;
-    }
+    private static void selectAccountMenu(User currentUser){
 
-    static double getDoubleInput() {
-        double amount = 0;
-        do {
-            try {
-                amount = Double.parseDouble(scan.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Not a valid entry. Please enter option numbers.");
-            }
-            if (amount < 0) {
-                System.out.println("Please enter a positive number.");
-            }
+        int input = getInput();
+        int size = currentUser.getAccounts().size();
+
+        if(input == size+1){
+            System.out.println("Thank you for banking with Figmental Bank!");
+            System.exit(0);
+        }else if(input > 0 && input <= size){
+            printManageAccountMenu(currentUser.getAccounts().get(input-1));
+        }else {
+            System.out.println("Your selection is out of range.");
+            selectAccountMenu(currentUser);
         }
-        while (amount < 0 );
-        return amount;
     }
 
     static void userMenu() {
         switch (getInput()) {
             case 1:
                 //option 1 - login existing user
-                User currentUser = UserAccess.loginUser();
+                User currentUser = DisplayLogic.loginUser();
                 if(currentUser != null) {
                     printAccountMenu(currentUser);
                 } else {
@@ -113,7 +99,7 @@ public class Display {
                 break;
             case 2:
                 //option 2 - register new user
-                UserAccess.registerUser();
+                DisplayLogic.registerUser();
                 break;
             case 3:
                 //option 3 - exit
@@ -150,33 +136,8 @@ public class Display {
         }
     }
 
-    private static void createAccount(User currentUser) {
-        Account account = new Account(currentUser.getUserName());
-        Bank.putAccount(account);
-        Bank.writeAccounts();
-        currentUser.addAccountNum(account.getAccountNum());
-        Bank.putUser(currentUser);
-        Bank.writeUsers();
-    }
-
-    private static void selectAccountMenu(User currentUser){
-
-        int input = getInput();
-        int size = currentUser.getAccounts().size();
-
-        if(input == size+1){
-            System.out.println("Thank you for banking with Figmental Bank!");
-            System.exit(0);
-        }else if(input > 0 && input <= size){
-            printManageAccountMenu(currentUser.getAccounts().get(input-1));
-        }else {
-            System.out.println("Your selection is out of range.");
-            selectAccountMenu(currentUser);
-        }
-    }
-
     static void manageAccountMenu(Account currentAccount) {
-        double amount = 0;
+        double amount;
         switch (getInput()) {
             case 1:
                 //balance
