@@ -6,13 +6,14 @@ import java.util.HashMap;
 
 public class Bank implements Serializable{
 
-    private static HashMap<String, User> users = new  HashMap<String, User>();
-    private static HashMap<Integer, Account> accounts = new  HashMap<Integer, Account>();
-    private static ArrayList<Transaction> transactionArrayList = new ArrayList<>();
+    private static HashMap<String, User> users = new  HashMap<>();
+    private static HashMap<Integer, Account> accounts = new  HashMap<>();
+    private static ArrayList<Transaction> transactions = new ArrayList<>();
 
     public static void initBank(){
         readAccounts();
         readUsers();
+        readTransaction();
     }
 
     @Override
@@ -101,8 +102,8 @@ public class Bank implements Serializable{
     }
 
     public static void writeTransaction(){
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\transaction.txt"))){
-            oos.writeObject(transactionArrayList);
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\transactions.txt"))){
+            oos.writeObject(transactions);
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -139,9 +140,9 @@ public class Bank implements Serializable{
     public static void readTransaction(){
         try{
             try{
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\transaction.txt"));
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src\\com\\company\\transactions.txt"));
                 Object obj = ois.readObject();
-                if(obj instanceof ArrayList) transactionArrayList = (ArrayList<Transaction>) obj;
+                if(obj instanceof ArrayList) transactions = (ArrayList<Transaction>) obj;
             }catch (EOFException ignored){}
         }catch(IOException | ClassNotFoundException e){
             e.printStackTrace();
@@ -172,11 +173,11 @@ public class Bank implements Serializable{
         Bank.accounts = accounts;
     }
 
-    public static ArrayList<Transaction> getTransactionArrayList() {
-        return transactionArrayList;
+    public static ArrayList<Transaction> getTransactions() {
+        return transactions;
     }
 
-    public static void setTransactionArrayList(ArrayList<Transaction> transactionArrayList) {
-        Bank.transactionArrayList = transactionArrayList;
+    public static void setTransactions(ArrayList<Transaction> transactions) {
+        Bank.transactions = transactions;
     }
 }
