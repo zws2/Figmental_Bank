@@ -80,12 +80,6 @@ public class User implements Serializable {
         }
     }
 
-    public boolean userNameAvailable(){
-        User storedUser = Bank.getUsers().get(userName);
-
-        return (storedUser == null);
-    }
-
     public static int newUserNum(){
         currentUserNum++;
         return currentUserNum;
