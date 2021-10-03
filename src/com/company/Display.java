@@ -1,12 +1,9 @@
 package com.company;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import static com.company.DisplayLogic.*;
 
 public class Display {
-
-    static Scanner scan = new Scanner(System.in);
-    static int option = 0;
 
     public static void startMenu() {
         printHeader();
@@ -38,13 +35,29 @@ public class Display {
         System.out.println("2) View Accounts");
         System.out.println("3) Exit");
         System.out.println("*********************************************");
-        manageAccountMenu(currentUser);
+        manageAccountsForUserMenu(currentUser);
     }
 
-    private static void selectAccountMenu(User currentUser) {
+    private static void printSelectAccountMenu(User currentUser) {
+        System.out.println("*********************************************");
+
+        ArrayList<Account> accountList = currentUser.getAccounts();
+        if (accountList.size() == 0) {
+            System.out.println("No accounts are registered to this user.");
+            printAccountMenu(currentUser);
+        }
+        else {
+            for(int i = 1; i < accountList.size() + 1; i++) {
+                System.out.println(i + ") " + accountList.get(i - 1));
+            }
+        }
+
+        System.out.println((currentUser.getAccounts().size()+1) + ") Exit");
+        System.out.println("*********************************************");
+        selectAccountMenu(currentUser);
     }
 
-    private static void printManageAccountMenu() {
+    private static void printManageAccountMenu(Account currentAccount) {
         System.out.println("*********************************************");
         System.out.println("Please choose one of the following options:");
         System.out.println("1) Check Balance");
@@ -54,32 +67,30 @@ public class Display {
         System.out.println("5) View Transactions");
         System.out.println("6) Exit");
         System.out.println("*********************************************");
-        viewAccountMenu();
+        manageAccountMenu(currentAccount);
     }
 
+    private static void selectAccountMenu(User currentUser){
 
+        int input = getInput();
+        int size = currentUser.getAccounts().size();
 
-    //initializes option to zero, takes user input for Menus
-    static int getInput() {
-        do {
-            try {
-                option = Integer.parseInt(scan.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Not a valid entry. Please enter option numbers.");
-            }
-            if (option < 1 || option > 3) {
-                System.out.println("Sorry! Your selection is out of option range.\nPlease enter a listed option.");
-            }
+        if(input == size+1){
+            System.out.println("Thank you for banking with Figmental Bank!");
+            System.exit(0);
+        }else if(input > 0 && input <= size){
+            printManageAccountMenu(currentUser.getAccounts().get(input-1));
+        }else {
+            System.out.println("Your selection is out of range.");
+            selectAccountMenu(currentUser);
         }
-        while (option < 1 || option > 3);
-        return option;
     }
 
     static void userMenu() {
         switch (getInput()) {
             case 1:
                 //option 1 - login existing user
-                User currentUser = UserAccess.loginUser();
+                User currentUser = DisplayLogic.loginUser();
                 if(currentUser != null) {
                     printAccountMenu(currentUser);
                 } else {
@@ -88,7 +99,7 @@ public class Display {
                 break;
             case 2:
                 //option 2 - register new user
-                UserAccess.registerUser();
+                DisplayLogic.registerUser();
                 break;
             case 3:
                 //option 3 - exit
@@ -100,77 +111,63 @@ public class Display {
                 System.out.println("Whoops! Something done broke!");
                 userMenu();
         }
-
     }
 
-    static void manageAccountMenu(User currentUser) {
+    static void manageAccountsForUserMenu(User currentUser) {
         switch (getInput()) {
             case 1:
                 //create new account
-                createUserAcct(currentUser);
+                createAccount(currentUser);
                 printAccountMenu(currentUser);
                 break;
             case 2:
                 //get account list method
-                printAccountList(currentUser);
-                selectAccountMenu(currentUser);
+                printSelectAccountMenu(currentUser);
                 break;
             case 3:
-                //option 3 - exit
+                //exit
                 System.out.println("Thank you for banking with Figmental Bank!");
                 System.exit(0);
                 break;
             default:
                 //any other input results in error and returns to beginning of the method
                 System.out.println("Whoops! Something done broke!");
-                manageAccountMenu(currentUser);
+                manageAccountsForUserMenu(currentUser);
         }
     }
 
-    private static void createUserAcct(User currentUser) {
-        Account userAcct = new Account(currentUser.getUserName());
-        Bank.putAccount(userAcct);
-        Bank.writeAccounts();
-        currentUser.addAccountNum(userAcct.getAccountNum());
-        Bank.putUser(currentUser);
-        Bank.writeUsers();
-    }
-
-
-    private static void printAccountList(User currentUser) {
-        ArrayList<Account> accountList = currentUser.getAccounts();
-        if (accountList.size() == 0) {
-            System.out.println("No accounts are registered to this user.");
-            printAccountMenu(currentUser);
-        }
-        else {
-            for(int i = 1; i < accountList.size() + 1; i++) {
-               System.out.println(i + ") " + accountList.get(i - 1));
-            }
-        }
-    }
-
-    static void viewAccountMenu() {
+    static void manageAccountMenu(Account currentAccount) {
+        double amount;
         switch (getInput()) {
             case 1:
                 //balance
-//                printBalance();
+                System.out.println("Current account balance: " + currentAccount.getBalance());
                 break;
             case 2:
                 //deposit
-//                inputDeposit();
+                System.out.println("Please enter an amount to deposit: ");
+                amount = getDoubleInput();
+                currentAccount.depositTransaction(amount);
                 break;
             case 3:
                 //withdraw
-//                inputWithdraw();
+                System.out.println("Please enter an amount to withdraw: ");
+                amount = getDoubleInput();
+                currentAccount.withdrawTransaction(amount);
                 break;
             case 4:
                 //transfer
-//                inputTransfer();
+                System.out.println("Please enter an amount to transfer: ");
+                amount = getDoubleInput();
+
+                System.out.println("Please enter an account number to transfer the amount to: ");
+                int bankNum = getInput();
+                currentAccount.transfer(bankNum, amount);
                 break;
             case 5:
                 //transactions print
 //                printTransaction();
+                System.out.println("Beep boop.");
                 break;
             case 6:
                 //exit
@@ -180,25 +177,7 @@ public class Display {
             default:
                 //any other input results in error and returns to beginning of the method
                 System.out.println("Whoops! Something done broke!");
-                viewAccountMenu();
         }
+        printManageAccountMenu(currentAccount);
     }
-
-
-
-//    private static void printBalance() {
-//    }
-//    private static void inputDeposit() {
-//    }
-//    private static void inputWithdraw() {
-//    }
-//    private static void inputTransfer() {
-//    }
-//    private static void printTransaction() {
-//        Bank.getTransactionArrayList();
-//    }
-//    private static void printAccountList() {
-//        //getAccountNumbers?
-//    }
-
 }
