@@ -33,7 +33,7 @@ public class Transaction implements Serializable {
     @Override
     public String toString() {
         return "Transaction{" +
-                ", transactionType='" + transactionType + '\'' +
+                "transactionType='" + transactionType + '\'' +
                 ", senderNum=" + senderNum +
                 ", receiverNum=" + receiverNum +
                 ", amount=" + amount +
@@ -65,6 +65,4 @@ public class Transaction implements Serializable {
     public String getTimestamp() {
         return timestamp;
     }
-
-
 }

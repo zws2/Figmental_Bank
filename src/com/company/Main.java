@@ -5,9 +5,9 @@ public class Main {
     public static void main(String[] args) {
 
         init();
-        //testAccount();
-        //testTransaction();
 
+//        testAccount();
+//        testTransaction();
 //        testBank();
 
     }
