@@ -4,24 +4,19 @@ package com.company;
 public class Main {
     public static void main(String[] args) {
 
-        //init();
-
+        init();
         //testAccount();
         //testTransaction();
 
-        testBank();
+//        testBank();
 
     }
 
     private static void init(){
         Display display = new Display();
-//        UserAccess userAccess = new UserAccess();
 
         Bank.initBank();
-
-        Display.printHeader();
-        Display.printMainMenu();
-        display.getInput();
+        Display.startMenu();
     }
 
     private static void testBank(){
