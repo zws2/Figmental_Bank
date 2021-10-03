@@ -1,5 +1,9 @@
 package com.company;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 //Collaborators: Zach Snyder, James Benton, Eileen Lowers
 public class Main {
     public static void main(String[] args) {
@@ -10,6 +14,8 @@ public class Main {
 
 //        testBank();
 
+        //NEW ADDITIONS IN BANK --> readTransaction(); - writeTransaction(); getter & setter - transactionHashMap<Integer, Transaction>
+        System.out.println(listUserTransactions());
     }
 
     private static void init(){
@@ -90,5 +96,25 @@ public class Main {
 
         t = a1.transfer(a2.getAccountNum(), 50d);
         System.out.println(t);
+    }
+
+    //completing all operations in this single method
+    private static List<Transaction> listUserTransactions() {
+        int bankNum = Bank.getNewBankNum();
+        Bank bank = new Bank();
+        Bank.getBanks().put(bankNum, bank);
+
+        User user = new User("Figmental_Bank", "test123", "Figmental", "Banking");
+
+        HashMap<String, User> map = new HashMap<>();
+        map.put("Figmental", user);
+        bank.setUsers(map);
+        bank.writeUsers();
+        user.addUserTransaction(new Transaction(bankNum, "transfer", 86534534, 345234433, 2000.00));
+        user.addUserTransaction(new Transaction(bankNum, "deposit", 782345234, 86534534, 5000.00));
+        user.addUserTransaction(new Transaction(bankNum, "withdraw", 86534534, 1342345324, 1000.00));
+        user.addUserTransaction(new Transaction(bankNum, "deposit", 345280534, 86534534, 3000.00));
+
+        return user.getUserTransactions();
     }
 }
