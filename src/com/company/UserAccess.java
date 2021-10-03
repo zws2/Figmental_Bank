@@ -95,14 +95,14 @@ public class UserAccess {
 
             //validating username and password
             User currentUser = new User(inputUserName, inputPassWord);
-
             boolean validUser = currentUser.validateLogin();
+
+            currentUser = Bank.getUsers().get(inputUserName);
 
             if (!validUser) {
                 System.out.println("Invalid Login: User or password does not exist.\n");
                 attempts++;
-            }
-            if (validUser) {
+            }else {
                 System.out.println("Login Success!\n");
                 return currentUser;
             }

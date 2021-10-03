@@ -43,11 +43,21 @@ public class Display {
 
     private static void printSelectAccountMenu(User currentUser) {
         System.out.println("*********************************************");
-        printAccountList(currentUser);
+
+        ArrayList<Account> accountList = currentUser.getAccounts();
+        if (accountList.size() == 0) {
+            System.out.println("No accounts are registered to this user.");
+            printAccountMenu(currentUser);
+        }
+        else {
+            for(int i = 1; i < accountList.size() + 1; i++) {
+                System.out.println(i + ") " + accountList.get(i - 1));
+            }
+        }
+
         System.out.println((currentUser.getAccounts().size()+1) + ") Exit");
         System.out.println("*********************************************");
         selectAccountMenu(currentUser);
-
     }
 
     private static void printManageAccountMenu(Account currentAccount) {
@@ -62,8 +72,6 @@ public class Display {
         System.out.println("*********************************************");
         manageAccountMenu(currentAccount);
     }
-
-
 
     //initializes option to zero, takes user input for Menus
     static int getInput() {
@@ -117,14 +125,13 @@ public class Display {
                 System.out.println("Whoops! Something done broke!");
                 userMenu();
         }
-
     }
 
     static void manageAccountsForUserMenu(User currentUser) {
         switch (getInput()) {
             case 1:
                 //create new account
-                createUserAcct(currentUser);
+                createAccount(currentUser);
                 printAccountMenu(currentUser);
                 break;
             case 2:
@@ -143,27 +150,13 @@ public class Display {
         }
     }
 
-    private static void createUserAcct(User currentUser) {
-        Account userAcct = new Account(currentUser.getUserName());
-        Bank.putAccount(userAcct);
+    private static void createAccount(User currentUser) {
+        Account account = new Account(currentUser.getUserName());
+        Bank.putAccount(account);
         Bank.writeAccounts();
-        currentUser.addAccountNum(userAcct.getAccountNum());
+        currentUser.addAccountNum(account.getAccountNum());
         Bank.putUser(currentUser);
         Bank.writeUsers();
-    }
-
-
-    private static void printAccountList(User currentUser) {
-        ArrayList<Account> accountList = currentUser.getAccounts();
-        if (accountList.size() == 0) {
-            System.out.println("No accounts are registered to this user.");
-            printAccountMenu(currentUser);
-        }
-        else {
-            for(int i = 1; i < accountList.size() + 1; i++) {
-               System.out.println(i + ") " + accountList.get(i - 1));
-            }
-        }
     }
 
     private static void selectAccountMenu(User currentUser){
@@ -180,7 +173,6 @@ public class Display {
             System.out.println("Your selection is out of range.");
             selectAccountMenu(currentUser);
         }
-
     }
 
     static void manageAccountMenu(Account currentAccount) {
@@ -224,7 +216,7 @@ public class Display {
             default:
                 //any other input results in error and returns to beginning of the method
                 System.out.println("Whoops! Something done broke!");
-                manageAccountMenu(currentAccount);
         }
+        printManageAccountMenu(currentAccount);
     }
 }
