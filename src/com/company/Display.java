@@ -35,7 +35,7 @@ public class Display {
         System.out.println("2) View Accounts");
         System.out.println("3) Exit");
         System.out.println("*********************************************");
-        manageAccountsForUserMenu(currentUser);
+        accountMenu(currentUser);
     }
 
     private static void printSelectAccountMenu(User currentUser) {
@@ -70,22 +70,6 @@ public class Display {
         manageAccountMenu(currentAccount);
     }
 
-    private static void selectAccountMenu(User currentUser){
-
-        int input = getInput();
-        int size = currentUser.getAccounts().size();
-
-        if(input == size+1){
-            System.out.println("Thank you for banking with Figmental Bank!");
-            System.exit(0);
-        }else if(input > 0 && input <= size){
-            printManageAccountMenu(currentUser.getAccounts().get(input-1));
-        }else {
-            System.out.println("Your selection is out of range.");
-            selectAccountMenu(currentUser);
-        }
-    }
-
     static void userMenu() {
         switch (getInput()) {
             case 1:
@@ -114,7 +98,7 @@ public class Display {
         }
     }
 
-    static void manageAccountsForUserMenu(User currentUser) {
+    static void accountMenu(User currentUser) {
         switch (getInput()) {
             case 1:
                 //create new account
@@ -133,7 +117,23 @@ public class Display {
             default:
                 //any other input results in error and returns to beginning of the method
                 System.out.println("Whoops! Something done broke!");
-                manageAccountsForUserMenu(currentUser);
+                accountMenu(currentUser);
+        }
+    }
+
+    private static void selectAccountMenu(User currentUser){
+
+        int input = getInput();
+        int size = currentUser.getAccounts().size();
+
+        if(input == size+1){
+            System.out.println("Thank you for banking with Figmental Bank!");
+            System.exit(0);
+        }else if(input > 0 && input <= size){
+            printManageAccountMenu(currentUser.getAccounts().get(input-1));
+        }else {
+            System.out.println("Your selection is out of range.");
+            selectAccountMenu(currentUser);
         }
     }
 
@@ -167,8 +167,7 @@ public class Display {
                 break;
             case 5:
                 //transactions print
-//                printTransaction();
-                System.out.println("Beep boop.");
+                currentAccount.getAssociatedTransactions().forEach(System.out::println);
                 break;
             case 6:
                 //exit

@@ -25,6 +25,8 @@ public class Bank implements Serializable{
     }
 
     public static void processTransaction(Transaction t){
+        transactions.add(t);
+        writeTransactions();
         switch(t.getTransactionType()){
             case "transfer": makeTransfer(t);
                 break;
@@ -100,7 +102,7 @@ public class Bank implements Serializable{
         }
     }
 
-    public static void writeTransaction(){
+    public static void writeTransactions(){
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src\\com\\company\\transactions.txt"))){
             oos.writeObject(transactions);
         }catch(IOException e){

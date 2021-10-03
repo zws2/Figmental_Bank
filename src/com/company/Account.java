@@ -1,6 +1,7 @@
 package com.company;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Account implements Serializable {
     private String userName;
@@ -73,6 +74,14 @@ public class Account implements Serializable {
         if(withdraw(amount)){
             return new Transaction("transfer", accountNum, receiverNumber, amount);
         }else return new Transaction("declined", accountNum, receiverNumber, amount);
+    }
+
+    public ArrayList<Transaction> getAssociatedTransactions(){
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        Bank.getTransactions().forEach(t -> {
+            if(t.getReceiverNum() == accountNum || t.getSenderNum() == accountNum) transactions.add(t);
+        });
+        return transactions;
     }
 
     public String getUserName() {
