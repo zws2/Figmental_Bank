@@ -57,7 +57,7 @@ public class Display {
         selectAccountMenu(currentUser);
     }
 
-    private static void printManageAccountMenu(Account currentAccount) {
+    private static void printManageAccountMenu(Account currentAccount, User currentUser) {
         System.out.println("*********************************************");
         System.out.println("Please choose one of the following options:");
         System.out.println("1) Check Balance");
@@ -65,9 +65,9 @@ public class Display {
         System.out.println("3) Make a Withdraw");
         System.out.println("4) Transfer Funds");
         System.out.println("5) View Transactions");
-        System.out.println("6) Exit");
+        System.out.println("6) Return to Account Menu");
         System.out.println("*********************************************");
-        manageAccountMenu(currentAccount);
+        manageAccountMenu(currentAccount, currentUser);
     }
 
     static void userMenu() {
@@ -107,6 +107,7 @@ public class Display {
                 break;
             case 2:
                 //get account list method
+                System.out.println("Select an account to view: ");
                 printSelectAccountMenu(currentUser);
                 break;
             case 3:
@@ -130,14 +131,14 @@ public class Display {
             System.out.println("Thank you for banking with Figmental Bank!");
             System.exit(0);
         }else if(input > 0 && input <= size){
-            printManageAccountMenu(currentUser.getAccounts().get(input-1));
+            printManageAccountMenu(currentUser.getAccounts().get(input-1), currentUser);
         }else {
             System.out.println("Your selection is out of range.");
             selectAccountMenu(currentUser);
         }
     }
 
-    static void manageAccountMenu(Account currentAccount) {
+    static void manageAccountMenu(Account currentAccount, User currentUser) {
         double amount;
         switch (getInput()) {
             case 1:
@@ -170,14 +171,13 @@ public class Display {
                 currentAccount.getAssociatedTransactions().forEach(System.out::println);
                 break;
             case 6:
-                //exit
-                System.out.println("Thank you for banking with Figmental Bank!");
-                System.exit(0);
+                //return to account menu
+                printAccountMenu(currentUser);
                 break;
             default:
                 //any other input results in error and returns to beginning of the method
                 System.out.println("Whoops! Something done broke!");
         }
-        printManageAccountMenu(currentAccount);
+        printManageAccountMenu(currentAccount, currentUser);
     }
 }
