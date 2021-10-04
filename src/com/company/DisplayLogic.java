@@ -39,9 +39,9 @@ public class DisplayLogic {
             try {
                 input = scan.nextLine();
             } catch (NumberFormatException e) {
-                System.out.println("Not a valid entry. Only letters accepted.");
+                System.out.println("Not a valid entry. Alphanumeric characters only.");
             }
-        } while (!input.matches("[a-zA-Z]+"));
+        } while (!input.matches("[a-zA-Z0-9]+"));
         return input;
     }
 
