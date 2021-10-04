@@ -107,6 +107,7 @@ public class Display {
                 break;
             case 2:
                 //get account list method
+                System.out.println("Select an account to view: ");
                 printSelectAccountMenu(currentUser);
                 break;
             case 3:
