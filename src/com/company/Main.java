@@ -13,8 +13,6 @@ public class Main {
     }
 
     private static void init(){
-        Display display = new Display();
-
         Bank.initBank();
         Display.startMenu();
     }
@@ -58,7 +56,6 @@ public class Main {
         for(Account a : Bank.getAccounts().values()){
             System.out.println(a);
         }
-
     }
 
     private static void testAccount(){
@@ -71,10 +68,12 @@ public class Main {
 
     private static void testTransaction(){
 
-        User u = new User();
+        Bank.initBank();
 
-        Account a1 = new Account();
-        Account a2 = new Account();
+        User u = new User("test", "password");
+
+        Account a1 = new Account(u.getUserName());
+        Account a2 = new Account(u.getUserName());
 
         Bank.putAccount(a1);
         Bank.putAccount(a2);
@@ -82,13 +81,23 @@ public class Main {
         System.out.println(a1);
         System.out.println(a2);
 
-        Transaction t = new Transaction("transfer", a1.getAccountNum(),
-                a2.getAccountNum(), 100d);
+        Transaction t = a1.transferTransaction(a2.getAccountNum(), 75d);
         System.out.println(t);
 
-        a1.depositTransaction(100d);
+        System.out.println(a1);
+        System.out.println(a2);
 
-        t = a1.transfer(a2.getAccountNum(), 50d);
+        t = a1.depositTransaction(200d);
         System.out.println(t);
+
+        System.out.println(a1);
+        System.out.println(a2);
+
+        t = a1.transferTransaction(a2.getAccountNum(), 75d);
+        System.out.println(t);
+
+        System.out.println(a1);
+        System.out.println(a2);
     }
+
 }

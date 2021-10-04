@@ -43,11 +43,13 @@ public class Bank implements Serializable{
         Account receiver = accounts.get(t.getReceiverNum());
 
         if(sender == null || receiver == null) {
-            System.out.println("Transfer failed.");
+            System.out.println("Recipient not found.");
             return;
         }
-
-        sender.withdraw(t.getAmount());
+        if(!sender.withdraw(t.getAmount())){
+            System.out.println("Insufficient funds for transfer.");
+            return;
+        }
         receiver.deposit(t.getAmount());
 
         accounts.put(sender.getAccountNum(), sender);
@@ -62,11 +64,13 @@ public class Bank implements Serializable{
         Account sender = accounts.get(t.getSenderNum());
 
         if(sender == null) {
-            System.out.println("Withdrawal failed.");
+            System.out.println("Account not found.");
             return;
         }
-
-        sender.withdraw(t.getAmount());
+        if(!sender.withdraw(t.getAmount())){
+            System.out.println("Insufficient funds for transfer.");
+            return;
+        }
 
         putAccount(sender);
         writeAccounts();
@@ -76,7 +80,7 @@ public class Bank implements Serializable{
         Account receiver = accounts.get(t.getReceiverNum());
 
         if(receiver == null) {
-            System.out.println("Deposit failed.");
+            System.out.println("Account not found.");
             return;
         }
 
@@ -119,8 +123,8 @@ public class Bank implements Serializable{
                 if (obj instanceof HashMap) users = (HashMap<String, User>) obj;
 
             } catch (EOFException ignored) {}
-        }catch(IOException | ClassNotFoundException e){
-                e.printStackTrace();
+        }catch(IOException | ClassNotFoundException ignored){
+                System.out.println("Error reading users.");
         }
     }
 
@@ -132,8 +136,8 @@ public class Bank implements Serializable{
                 Object obj = ois.readObject();
                 if(obj instanceof HashMap) accounts = (HashMap<Integer, Account>) obj;
             }catch (EOFException ignored){}
-        }catch(IOException | ClassNotFoundException e){
-            e.printStackTrace();
+        }catch(IOException | ClassNotFoundException ignored){
+            System.out.println("Error reading accounts.");
         }
     }
 
@@ -145,40 +149,30 @@ public class Bank implements Serializable{
                 Object obj = ois.readObject();
                 if(obj instanceof ArrayList) transactions = (ArrayList<Transaction>) obj;
             }catch (EOFException ignored){}
-        }catch(IOException | ClassNotFoundException e){
-            e.printStackTrace();
+        }catch(IOException | ClassNotFoundException ignored){
+            System.out.println("Error reading transactions.");
         }
     }
 
     public static void putUser(User u){
         users.put(u.getUserName(), u);
+        writeUsers();
     }
 
     public static void putAccount(Account a){
         accounts.put(a.getAccountNum(), a);
+        writeAccounts();
     }
 
     public static HashMap<String, User> getUsers() {
         return users;
     }
 
-    public static void setUsers(HashMap<String, User> users) {
-        Bank.users = users;
-    }
-
     public static HashMap<Integer, Account> getAccounts() {
         return accounts;
     }
 
-    public static void setAccounts(HashMap<Integer, Account> accounts) {
-        Bank.accounts = accounts;
-    }
-
     public static ArrayList<Transaction> getTransactions() {
         return transactions;
-    }
-
-    public static void setTransactions(ArrayList<Transaction> transactions) {
-        Bank.transactions = transactions;
     }
 }

@@ -9,7 +9,7 @@ public class Account implements Serializable {
     private double balance;
 
     //this is used to generate new account nums so no duplicates are made
-    private static int currentAccountNum = 200;
+    private static int currentAccountNum = 100;
 
     public Account(String userName, int accountNum, double balance) {
         this.userName = userName;
@@ -57,21 +57,21 @@ public class Account implements Serializable {
     }
 
     //A person deposits money into their own account.
-    public void depositTransaction(double amount){
-        new Transaction("deposit", accountNum, amount);
+    public Transaction depositTransaction(double amount){
+        return new Transaction("deposit", accountNum, amount);
     }
 
     //A person withdraws from their own account.
-    public void withdrawTransaction(double amount){
+    public Transaction withdrawTransaction(double amount){
         if(balance >= amount){
-            new Transaction("withdraw", accountNum, amount);
-        }else new Transaction("declined", accountNum, amount);
+            return new Transaction("withdraw", accountNum, amount);
+        }else return new Transaction("declined", accountNum, amount);
     }
 
     //an account transfers money to another account
     //use this when you want to send a transaction to Bank
-    public Transaction transfer(int receiverNumber, double amount){
-        if(withdraw(amount)){
+    public Transaction transferTransaction(int receiverNumber, double amount){
+        if(balance >= amount && Bank.getAccounts().get(receiverNumber) != null){
             return new Transaction("transfer", accountNum, receiverNumber, amount);
         }else return new Transaction("declined", accountNum, receiverNumber, amount);
     }
@@ -101,7 +101,7 @@ public class Account implements Serializable {
     }
 
     private static int getNewAccountNum() {
-        currentAccountNum++;
+        while(Bank.getAccounts().containsKey(currentAccountNum)) currentAccountNum++;
         return currentAccountNum;
     }
 }

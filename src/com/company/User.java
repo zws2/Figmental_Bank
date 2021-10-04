@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class User implements Serializable {
 
-    public static int currentUserNum = 100;
+    private static int currentUserNum = 0;
 
     private final String userName;
     private String password;

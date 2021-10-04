@@ -21,8 +21,8 @@ public class Display {
     static void printUserMenu() {
         System.out.println("*********************************************");
         System.out.println("Please choose one of the following options:");
-        System.out.println("1) Existing Account Login");
-        System.out.println("2) Account Registration");
+        System.out.println("1) Login");
+        System.out.println("2) Register User");
         System.out.println("3) Exit");
         System.out.println("*********************************************");
         userMenu();
@@ -31,8 +31,8 @@ public class Display {
     private static void printAccountMenu(User currentUser) {
         System.out.println("*********************************************");
         System.out.println("Please choose one of the following options:");
-        System.out.println("1) Create New Account");
-        System.out.println("2) View Accounts");
+        System.out.println("1) Create New Bank Account");
+        System.out.println("2) View Bank Accounts");
         System.out.println("3) Exit");
         System.out.println("*********************************************");
         accountMenu(currentUser);
@@ -163,7 +163,7 @@ public class Display {
 
                 System.out.println("Please enter an account number to transfer the amount to: ");
                 int bankNum = getInput();
-                currentAccount.transfer(bankNum, amount);
+                currentAccount.transferTransaction(bankNum, amount);
                 break;
             case 5:
                 //transactions print
